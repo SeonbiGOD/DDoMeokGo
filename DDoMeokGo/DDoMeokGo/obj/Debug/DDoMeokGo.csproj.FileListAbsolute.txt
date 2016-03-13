@@ -1,0 +1,9 @@
+c:\users\com\documents\visual studio 2013\Projects\DDoMeokGo\DDoMeokGo\bin\Debug\DDoMeokGo.exe.config
+c:\users\com\documents\visual studio 2013\Projects\DDoMeokGo\DDoMeokGo\bin\Debug\DDoMeokGo.exe
+c:\users\com\documents\visual studio 2013\Projects\DDoMeokGo\DDoMeokGo\bin\Debug\DDoMeokGo.pdb
+c:\users\com\documents\visual studio 2013\Projects\DDoMeokGo\DDoMeokGo\obj\Debug\DDoMeokGo.csprojResolveAssemblyReference.cache
+c:\users\com\documents\visual studio 2013\Projects\DDoMeokGo\DDoMeokGo\obj\Debug\DDoMeokGo.Form1.resources
+c:\users\com\documents\visual studio 2013\Projects\DDoMeokGo\DDoMeokGo\obj\Debug\DDoMeokGo.Properties.Resources.resources
+c:\users\com\documents\visual studio 2013\Projects\DDoMeokGo\DDoMeokGo\obj\Debug\DDoMeokGo.csproj.GenerateResource.Cache
+c:\users\com\documents\visual studio 2013\Projects\DDoMeokGo\DDoMeokGo\obj\Debug\DDoMeokGo.exe
+c:\users\com\documents\visual studio 2013\Projects\DDoMeokGo\DDoMeokGo\obj\Debug\DDoMeokGo.pdb
