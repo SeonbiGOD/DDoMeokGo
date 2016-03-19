@@ -6,3 +6,6 @@
 
 - Minimax algorithm : https://en.wikipedia.org/wiki/Minimax
 - Reinforcement Learning : http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html
+
+
+- 블루스택(루팅버전) : https://mega.nz/#!qoJDgCTI
