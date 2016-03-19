@@ -13,6 +13,7 @@ using System.Resources;
 using System.Threading;
 using System.Diagnostics;
 using System.Drawing.Imaging;
+using Microsoft.Win32;
 
 namespace DDoMeokGo
 {
@@ -25,11 +26,19 @@ namespace DDoMeokGo
             public static Bitmap screen;
             public static int delay = 400;
             public static Thread mainThread;
-            public static bool problem;
+            public static Rectangle sResult;
         }
+
+        private class ImgPos
+        {
+            public static int x, y;
+        }
+
+        private bool isRunning;
 
         public Form1()
         {
+            isRunning = false;
             InitializeComponent();
         }
 
@@ -161,7 +170,7 @@ namespace DDoMeokGo
             return image;
         }
 
-        // 모니터링 - 화면 캡쳐
+        // 모니터링 - 캡쳐
         private void button2_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(comboBox1.Text))
@@ -170,15 +179,7 @@ namespace DDoMeokGo
                 return;
             }
             button2.Enabled = false;
-
-            Bitmap image = TargetCapture();
-
-            if (tabControl1.SelectedTab.Name.Equals("tabPage1"))
-                pictureBox1.Image = image;
-
-            //Directory.CreateDirectory(@"Screenshots\");
-            //image.Save(string.Format(@"Screenshots\{0}.png", DateTime.Now.ToString("yyyyMMdd_HHmmss")));
-
+            pictureBox1.Image = TargetCapture();
             button2.Enabled = true;
         }
 
@@ -283,89 +284,121 @@ namespace DDoMeokGo
             return location;
         }
 
-        // Work 함수들 ( 이미지 탐색 후 해당 이미지 존재하면 클릭 )
-        public bool Work(int mode, string name)
+        // 이미지 서칭 함수(BitmapSearch 함수 이용) mode 가 1인 경우 -> 서칭 성공 한 부분 클릭
+        public bool ImageSearch(string name, int mode)
         {
-            return Work(mode, name, -1, -1, true, 0.1);
-        }
-        public bool Work(int mode, string name, int clickX, int clickY)
-        {
-            return Work(mode, name, clickX, clickY, true, 0.1);
-        }
-        public bool Work(int mode, string name, int clickX, int clickY, bool capture)
-        {
-            return Work(mode, name, clickX, clickY, capture, 0.1);
-        }
-        public bool Work(int mode, string name, int clickX, int clickY, bool capture, double tolerance)
-        {
-            bool matched = false;
-            if (Sys.problem)
-                mode = mode | 1;
-
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
             string strBaseName = string.Format("{0}.Properties.Resources", assembly.GetName().Name);
             ResourceManager rm = new ResourceManager(strBaseName, assembly);
 
-            for (int i = 0; i < 5 * 60 * 1000 / (Sys.delay == 0 ? 1 : Sys.delay); i++)
+            // tolerance
+            double tolerance = 0.1;
+
+            // 현재 화면
+            Sys.screen = TargetCapture();
+
+            // 이미지 서치
+            Sys.sResult = new Rectangle();
+            Sys.sResult = BitmapSearch(Sys.screen, (Bitmap)rm.GetObject(name), tolerance);
+            Log(string.Format("{0} {1}", name, Sys.sResult == Rectangle.Empty ? "서칭 실패" : "서칭 성공"));
+            if (Sys.sResult.IsEmpty)
             {
-                if (((mode & 1) == 0 && !Sys.problem) || matched)
-                    Thread.Sleep(Sys.delay);
-
-                if (!Sys.problem && capture)
-                    Sys.screen = TargetCapture();
-                Rectangle location = BitmapSearch(Sys.screen, (Bitmap)rm.GetObject(name), tolerance);
-                Log(string.Format("{0} {1}", name, location == Rectangle.Empty ? "찾기 " + i : "발견"));
-
-                if (location != Rectangle.Empty)
-                {
-                    if (tabControl1.SelectedTab.Name.Equals("tabPage1"))
-                    {
-                        Graphics g = Graphics.FromImage(Sys.screen);
-                        g.DrawRectangle(new Pen(Color.Red, 5), location);
-                        pictureBox1.Image = new Bitmap(Sys.screen.Width, Sys.screen.Height, g);
-                    }
-                    Sys.problem = false;
-                    if (clickX >= 0 && clickY >= 0 && (!matched || (i % 20 == 0)))
-                        TargetClick((clickX == 0) ? location.X + location.Width : clickX,
-                            (clickY == 0) ? location.Y + location.Height : clickY);
-                    if ((mode & 2) == 2)
-                        return true;
-                }
-                else
-                {
-                    if (tabControl1.SelectedTab.Name.Equals("tabPage1"))
-                        pictureBox1.Image = Sys.screen;
-                    if (matched)
-                        return true;
-                    if ((mode & 1) == 1)
-                        return false;
-                }
+                return false;
             }
-            Do("초기화");
-            return false;
-        }
-
-        // Do 함수( 게임 상의 행동 )
-        public void Do(string type)
-        {
-            switch (type)
+            else
             {
-                /*
-                 *  (삭제될수도있는 함수)
-                    ex) 행동력 구매
-                */
+                if (mode == 1)
+                {
+                    // 윈도우 좌표 -> 블루스택 좌표
+                    int x, y;
+                    x = Sys.sResult.X + Sys.sResult.Width;
+                    y = Sys.sResult.Y + Sys.sResult.Height;
+                    y *= 2;
+
+                    TargetClick(x, y);
+                }
+                return true;
             }
         }
 
         // Run
         public void Run()
         {
-            //Sys.problem = true;
-            Sys.screen = TargetCapture();
+            bool res;
+            int x, y;
 
-            /*
-                게임 진행 및 기보 저장 부분이 구현되어야함.
-            */
+            #region 진입
+            // 공지사항 -> 확인
+            while (true)
+            {
+                res = ImageSearch("확인", 1);
+                if (res)
+                {
+                    break;
+                }
+            }
+            #endregion
+
+            #region 대국
+            // 일반 대국 신청 
+            
+            #endregion
+        }
+
+        // 시작 버튼
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(comboBox1.Text))
+            {
+                MessageBox.Show(this, "대상기기를 선택해주세요.", "실행 실패", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                this.isRunning = false;                
+                return;
+            }
+
+            // 
+            if (isRunning == false)
+            {
+                button3.Text = "중지";
+                isRunning = true;
+                Log("시작");
+                Sys.mainThread = new Thread(Run);
+                Sys.mainThread.Start();
+            }
+            else
+            {
+                isRunning = false;
+                button3.Text = "시작";
+                Sys.mainThread.Abort();
+                Log("중지");
+            }
+        }
+
+        // 해상도 설정
+        private void button4_Click(object sender, EventArgs e)
+        {
+            foreach (Process p in Process.GetProcesses())
+            {
+                string pname = p.ProcessName;
+                if (pname.StartsWith("HD-"))
+                {
+                    try
+                    {
+                        p.Kill();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("관리자 권한으로 실행해주세요.");
+                        break;
+                    }
+                }
+            }
+            RegistryKey reg = Registry.LocalMachine.CreateSubKey(@"SOFTWARE\BlueStacks\Guests\Android\FrameBuffer\0");
+            reg.SetValue("GuestWidth", 1440);
+            reg.SetValue("GuestHeight", 900);
+            reg.SetValue("WindowWidth", 720);
+            reg.SetValue("WindowHeight", 450);
+
+            MessageBox.Show("해상도 설정 완료. 블루스택을 재실행 하신 후 이용해주세요.");
         }
     }
 }
