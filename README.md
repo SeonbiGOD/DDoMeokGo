@@ -8,4 +8,4 @@
 - Reinforcement Learning : http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html
 
 
-- 블루스택(루팅버전) : https://mega.nz/#!qoJDgCTI
+- 블루스택(루팅버전) : https://mega.nz/#!qoJDgCTI!cKOcltRWgOB_Gy0HMpTL8AUxDr_lyEFrx6KboAU_A-E
