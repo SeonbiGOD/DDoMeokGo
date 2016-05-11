@@ -1,0 +1,12 @@
+c:\users\kang\documents\visual studio 2013\Projects\Jarvis\Jarvis\bin\Debug\Jarvis.exe.config
+c:\users\kang\documents\visual studio 2013\Projects\Jarvis\Jarvis\bin\Debug\Jarvis.exe
+c:\users\kang\documents\visual studio 2013\Projects\Jarvis\Jarvis\bin\Debug\Jarvis.pdb
+c:\users\kang\documents\visual studio 2013\Projects\Jarvis\Jarvis\obj\Debug\Jarvis.csprojResolveAssemblyReference.cache
+c:\users\kang\documents\visual studio 2013\Projects\Jarvis\Jarvis\obj\Debug\Jarvis.exe
+c:\users\kang\documents\visual studio 2013\Projects\Jarvis\Jarvis\obj\Debug\Jarvis.pdb
+C:\Users\com\Desktop\Jarvis (2)\Jarvis\bin\Debug\Jarvis.exe.config
+C:\Users\com\Desktop\Jarvis (2)\Jarvis\obj\Debug\Jarvis.exe
+C:\Users\com\Desktop\Jarvis (2)\Jarvis\obj\Debug\Jarvis.pdb
+C:\Users\com\Desktop\Jarvis\Jarvis\bin\Debug\Jarvis.exe.config
+C:\Users\com\Desktop\Jarvis\Jarvis\obj\Debug\Jarvis.exe
+C:\Users\com\Desktop\Jarvis\Jarvis\obj\Debug\Jarvis.pdb
