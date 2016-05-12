@@ -1,0 +1,12 @@
+c:\users\com\documents\visual studio 2013\Projects\New_Jarvis\New_Jarvis\bin\Debug\New_Jarvis.exe.config
+C:\Users\com\documents\visual studio 2013\Projects\New_Jarvis\New_Jarvis\bin\Debug\New_Jarvis.exe
+C:\Users\com\documents\visual studio 2013\Projects\New_Jarvis\New_Jarvis\bin\Debug\New_Jarvis.pdb
+C:\Users\com\documents\visual studio 2013\Projects\New_Jarvis\New_Jarvis\bin\Debug\MetroFramework.Design.dll
+C:\Users\com\documents\visual studio 2013\Projects\New_Jarvis\New_Jarvis\bin\Debug\MetroFramework.dll
+C:\Users\com\documents\visual studio 2013\Projects\New_Jarvis\New_Jarvis\bin\Debug\MetroFramework.Fonts.dll
+C:\Users\com\documents\visual studio 2013\Projects\New_Jarvis\New_Jarvis\obj\Debug\New_Jarvis.csprojResolveAssemblyReference.cache
+C:\Users\com\documents\visual studio 2013\Projects\New_Jarvis\New_Jarvis\obj\Debug\New_Jarvis.Form1.resources
+C:\Users\com\documents\visual studio 2013\Projects\New_Jarvis\New_Jarvis\obj\Debug\New_Jarvis.Properties.Resources.resources
+C:\Users\com\documents\visual studio 2013\Projects\New_Jarvis\New_Jarvis\obj\Debug\New_Jarvis.csproj.GenerateResource.Cache
+C:\Users\com\documents\visual studio 2013\Projects\New_Jarvis\New_Jarvis\obj\Debug\New_Jarvis.exe
+C:\Users\com\documents\visual studio 2013\Projects\New_Jarvis\New_Jarvis\obj\Debug\New_Jarvis.pdb
