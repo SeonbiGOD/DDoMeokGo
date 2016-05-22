@@ -532,13 +532,13 @@ namespace New_Jarvis
             {
                 for (int j = 0; j < 15; j++)
                 {    
-                    if(black(i,j)==0)
+                    if(field(i,j)==null)
                     {
                         count = 0;
                         //위3
                         if (i > 3)
                         {
-                            if (black(i - 1, j) == 1 && black(i - 2, j) == 1 && black(i - 3, j) == 1)
+                            if (field(i - 1, j) == 'b' && field(i - 2, j) == 'b' && field(i - 3, j) == 'b')
                             {
                                 count++;
                             }
@@ -546,7 +546,7 @@ namespace New_Jarvis
                         //오른쪽위3
                         if ((i > 3) && (j < 12))
                         {
-                            if (black(i - 1, j +1) == 1 && black(i-2, j+2) ==1 && black(i-3, j+3) == 1)
+                            if (field(i - 1, j + 1) == 'b' && field(i - 2, j + 2) == 'b' && field(i - 3, j + 3) == 'b')
                             {
                                 count++;
                             }
@@ -554,7 +554,7 @@ namespace New_Jarvis
                         //오른쪽3
                         if (j < 12)
                         {
-                            if (black(i, j+1) == 1 && black(i, j+2) == 1 && black(i, j+3) == 1)
+                            if (field(i, j + 1) == 'b' && field(i, j + 2) == 'b' && field(i, j + 3) == 'b')
                             {
                                 count++;
                             }
@@ -562,7 +562,7 @@ namespace New_Jarvis
                         //오른쪽아래3
                         if ((i<12) && (j < 12))
                         {
-                            if (black(i+1, j+1) == 1 && black(i+2, j+2) == 1 && black(i+3, j+3) == 1)
+                            if (field(i + 1, j + 1) == 'b' && field(i + 2, j + 2) == 'b' && field(i + 3, j + 3) == 'b')
                             {
                                 count++;
                             }
@@ -570,7 +570,7 @@ namespace New_Jarvis
                         //아래3
                         if (i < 12)
                         {
-                            if (black(i+1, j) == 1 && black(i+2, j) == 1 && black(i+3, j) == 1)
+                            if (field(i + 1, j) == 'b' && field(i + 2, j) == 'b' && field(i + 3, j) == 'b')
                             {
                                 count++;
                             }
@@ -578,7 +578,7 @@ namespace New_Jarvis
                         //왼쪽아래3
                         if ((i<12) && (j > 3))
                         {
-                            if (black(i+1, j-1) ==1 && black(i+2, j-2) == 1 && black(i+3, j-3) == 1)
+                            if (field(i + 1, j - 1) == 'b' && field(i + 2, j - 2) == 'b' && field(i + 3, j - 3) == 'b')
                             {
                                 count++;
                             }
@@ -586,7 +586,7 @@ namespace New_Jarvis
                         //왼쪽3
                         if (j > 3)
                         {
-                            if (black(i, j-1) == 1 && black(i, j-2) == 1 && black(i, j-3) == 1)
+                            if (field(i, j - 1) == 'b' && field(i, j - 2) == 'b' && field(i, j - 3) == 'b')
                             {
                                 count++;
                             }
@@ -594,7 +594,7 @@ namespace New_Jarvis
                         //왼쪽위3
                         if ((i>3) && (j >3))
                         {
-                            if (black(i-1, j-1) == 1 && black(i-2, j-2) == 1 && black(i-3, j-3) == 1)
+                            if (field(i - 1, j - 1) == 'b' && field(i - 2, j - 2) == 'b' && field(i - 3, j - 3) == 'b')
                             {
                                 count++;
                             }
@@ -613,11 +613,685 @@ namespace New_Jarvis
             // (3) 상대편의 방어가 없는 사삼 - 98점
             makeBlack();
             #region 방어 없는 사삼
+            for (i = 0; i < 15; i++)
+            {
+                for (int j = 0; j < 15; j++)
+                {
+                    if (field(i, j) == null)
+                    {
+                        int checkfour = 0;
+                        int checkthree = 0;
+                        /*******************4가 있는지 확인*************/
+                        //위아래
+                        if ((i > 3) && (i<15))
+                        {
+                            if (field(i + 1, j) == null && field(i - 1, j) == 'b' && field(i - 2, j) == 'b' && field(i - 3, j) == 'b' && field(i - 4, j) == null)
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        if ((i > 2) && (i < 14))
+                        {
+                            if (field(i + 2, j) == null && field(i + 1, j) == 'b' && field(i - 1, j) == 'b' && field(i - 2, j) == 'b' && field(i - 3, j) == null)
+                            {
+                                checkfour = 1; 
+                            }
+                        }
+                        if ((i > 1) && (i < 13))
+                        {
+                            if (field(i + 3, j) == null && field(i + 2, j) == 'b' && field(i + 1, j) == 'b' && field(i - 1, j) == 'b' && field(i - 2, j) == null)
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        if ((i > 0) && (i < 12))
+                        {
+                            if (field(i - 1, j) == null && field(i + 1, j) == 'b' && field(i + 2, j) == 'b' && field(i + 3, j) == 'b' && field(i + 4, j) == null)
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        //왼쪽오른쪽
+                        if ((j > 3) && (j < 15))
+                        {
+                            if (field(i, j + 1) == null && field(i, j - 1) == 'b' && field(i, j - 2) == 'b' && field(i, j - 3) == 'b' && field(i, j - 4) == null)
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        if ((j > 2) && (j < 14))
+                        {
+                            if (field(i, j + 2) == null && field(i, j + 1) == 'b' && field(i, j - 1) == 'b' && field(i, j - 2) == 'b' && field(i, j - 3) == null)
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        if ((j > 1) && (j < 13))
+                        {
+                            if (field(i, j + 3) == null && field(i, j + 2) == 'b' && field(i, j + 1) == 'b' && field(i, j - 1) == 'b' && field(i, j - 2) == null)
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        if ((j > 0) && (j < 12))
+                        {
+                            if (field(i, j - 1) == null && field(i, j + 1) == 'b' && field(i, j + 2) == 'b' && field(i, j + 3) == 'b' && field(i, j + 4) == null)
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        //위오른쪽방향대각선
+                        if ((i > 3) && (i<15) && (j < 12) && (j>0))
+                        {
+                            if (field(i + 1, j - 1) == null && field(i - 1, j + 1) == 'b' && field(i - 2, j + 2) == 'b' && field(i - 3, j + 3) == 'b' && field(i - 4, j + 4) == null)
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        if ((i > 2) && (i < 14) && (j < 13) && (j > 1))
+                        {
+                            if (field(i - 3, j + 3) == null && field(i - 1, j + 1) == 'b' && field(i - 2, j + 2) == 'b' && field(i + 1, j - 1) == 'b' && field(i + 2, j - 2) == null)
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        if ((i > 1) && (i < 13) && (j < 14) && (j > 2))
+                        {
+                            if (field(i - 2, j + 2) == null && field(i - 1, j + 1) == 'b' && field(i + 1, j - 1) == 'b' && field(i + 2, j - 2) == 'b' && field(i + 3, j - 3) == null)
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        if ((i > 0) && (i < 12) && (j<15) && (j > 3))
+                        {
+                            if (field(i - 1, j + 1) == null && field(i + 1, j - 1) == 'b' && field(i + 2, j - 2) == 'b' && field(i + 3, j - 3) == 'b' && field(i + 4, j - 4) == null)
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        //위왼쪽방향대각선
+                        if ((i > 3) && (i < 15) && (j > 3) && (j < 15))
+                        {
+                            if (field(i + 1, j + 1) == null && field(i - 1, j - 1) == 'b' && field(i - 2, j - 2) == 'b' && field(i - 3, j - 3) == 'b' && field(i - 4, j - 4) == null)
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        if ((i > 2) && (i < 14) && (j > 2) && (j < 14))
+                        {
+                            if (field(i - 3, j - 3) == null && field(i - 1, j - 1) == 'b' && field(i - 2, j - 2) == 'b' && field(i + 1, j + 1) == 'b' && field(i + 2, j + 2) == null)
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        if ((i > 1) && (i < 13) && (j > 1) && (j < 13))
+                        {
+                            if (field(i - 2, j - 2) == null && field(i - 1, j - 1) == 'b' && field(i + 1, j + 1) == 'b' && field(i + 2, j + 2) == 'b' && field(i + 3, j + 3) == null)
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        if ((i > 0) && (i < 12) && (j > 0) && (i < 12))
+                        {
+                            if (field(i - 1, j - 1) == null && field(i + 1, j + 1) == 'b' && field(i + 2, j + 2) == 'b' && field(i + 3, j + 3) == 'b' && field(i + 4, j + 4) == null)
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        /*******************************************************/
+                        /******************3이 있는지 확인**********************/
+                        //위아래
+                        if ((i > 2) && (i < 15))
+                        {
+                            if (field(i + 1, j) == null && field(i - 1, j) == 'b' && field(i - 2, j) == 'b' && field(i - 3, j) ==  null)
+                            {
+                                checkthree = 1;
+                            }
+                        }
+                        if ((i > 1) && (i < 14))
+                        {
+                            if (field(i + 2, j) == null && field(i + 1, j) == 'b' && field(i - 1, j) == 'b' && field(i - 2, j) == null)
+                            {
+                                checkthree = 1;
+                            }
+                        }
+                        if ((i > 0) && (i < 13))
+                        {
+                            if (field(i + 3, j) == null && field(i + 2, j) == 'b' && field(i + 1, j) == 'b' && field(i - 1, j) == null)
+                            {
+                                checkthree = 1;
+                            }
+                        }
+                        //왼쪽오른쪽
+                        if ((j > 2) && (j < 15))
+                        {
+                            if (field(i, j + 1) == null && field(i, j - 1) == 'b' && field(i, j - 2) == 'b' && field(i, j - 3) == null)
+                            {
+                                checkthree = 1;
+                            }
+                        }
+                        if ((j > 1) && (j < 14))
+                        {
+                            if (field(i, j + 2) == null && field(i, j + 1) == 'b' && field(i, j - 1) == 'b' && field(i, j - 2) == null)
+                            {
+                                checkthree = 1;
+                            }
+                        }
+                        if ((j > 0) && (j < 13))
+                        {
+                            if (field(i, j + 3) == null && field(i, j + 2) == 'b' && field(i, j + 1) == 'b' && field(i, j - 1) == null)
+                            {
+                                checkthree = 1;
+                            }
+                        }
+                        //위오른쪽방향대각선
+                        if ((i > 2) && (i < 15) && (j < 13) && (j > 0))
+                        {
+                            if (field(i + 1, j - 1) == null && field(i - 1, j + 1) == 'b' && field(i - 2, j + 2) == 'b' && field(i - 3, j + 3) == null)
+                            {
+                                checkthree = 1;
+                            }
+                        }
+                        if ((i > 1) && (i < 14) && (j < 14) && (j > 1))
+                        {
+                            if (field(i - 1, j + 1) == 'b' && field(i - 2, j + 2) == null && field(i + 1, j - 1) == 'b' && field(i + 2, j - 2) == null)
+                            {
+                                checkthree = 1;
+                            }
+                        }
+                        if ((i > 0) && (i < 13) && (j < 15) && (j > 2))
+                        {
+                            if (field(i - 1, j + 1) == null && field(i + 1, j - 1) == 'b' && field(i + 2, j - 2) == 'b' && field(i + 3, j - 3) == null)
+                            {
+                                checkthree = 1;
+                            }
+                        }
+                        //위왼쪽방향대각선
+                        if ((i > 2) && (i < 15) && (j > 2) && (j < 15))
+                        {
+                            if (field(i + 1, j + 1) == null && field(i - 1, j - 1) == 'b' && field(i - 2, j - 2) == 'b' && field(i - 3, j - 3) == null)
+                            {
+                                checkthree = 1;
+                            }
+                        }
+                        if ((i > 1) && (i < 14) && (j > 1) && (j < 14))
+                        {
+                            if (field(i - 2, j - 2) == null && field(i - 1, j - 1) == 'b' && field(i + 1, j + 1) == 'b' && field(i + 2, j + 2) == null)
+                            {
+                                checkthree = 1;
+                            }
+                        }
+                        if ((i > 0) && (i < 13) && (j > 0) && (j < 13))
+                        {
+                            if (field(i - 1, j - 1) == null && field(i + 1, j + 1) == 'b' && field(i + 2, j + 2) == 'b' && field(i + 3, j + 3) == null)
+                            {
+                                checkthree = 1;
+                            }
+                        }
+                        /*******************************************************/
+                        if ((checkfour + checkthree) == 2)
+                        {
+                            showValue(i, j, 98); 
+                        }
+                    }
+                }
+            }
             #endregion
 
-            // (4) 상대편의 방어가 있는 사삼 - 70점
-            makeBlack();
+                // (4) 상대편의 방어가 있는 사삼 - 70점
+                makeBlack();
             #region 방어 있는 사삼
+            for (i = 0; i < 15; i++)
+            {
+                for (int j = 0; j < 15; j++)
+                {
+                    if (field(i, j) == null)
+                    {
+                        int checkfour = 0;
+                        int checkthree = 0;
+                        /*******************4가 있는지 확인*************/
+                        //위아래
+                        if ((i > 3) && (i < 15))
+                        {
+                            if (field(i + 1, j) == null && field(i - 1, j) == 'b' && field(i - 2, j) == 'b' && field(i - 3, j) == 'b' && field(i - 4, j) == null)
+                            {
+                                checkfour = 0;
+                            }
+                            else if (field(i + 1, j) == null && field(i - 1, j) == 'b' && field(i - 2, j) == 'b' && field(i - 3, j) == 'b' && field(i - 4, j) == 'w')
+                            {
+                                checkfour = 1;
+                            }
+                            else if (field(i + 1, j) == 'w' && field(i - 1, j) == 'b' && field(i - 2, j) == 'b' && field(i - 3, j) == 'b' && field(i - 4, j) == null)
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        if ((i > 2) && (i < 14))
+                        {
+                            if (field(i + 2, j) == null && field(i + 1, j) == 'b' && field(i - 1, j) == 'b' && field(i - 2, j) == 'b' && field(i - 3, j) == null)
+                            {
+                                checkfour = 0;
+                            }
+                            else if (field(i + 2, j) == null && field(i + 1, j) == 'b' && field(i - 1, j) == 'b' && field(i - 2, j) == 'b' && field(i - 3, j) == 'w')
+                            {
+                                checkfour = 1;
+                            }
+                            else if (field(i + 2, j) == 'w' && field(i + 1, j) == 'b' && field(i - 1, j) == 'b' && field(i - 2, j) == 'b' && field(i - 3, j) == null)
+                            {
+                                checkfour = 0;
+                            }
+                        }
+                        if ((i > 1) && (i < 13))
+                        {
+                            if (field(i + 3, j) == null && field(i + 2, j) == 'b' && field(i + 1, j) == 'b' && field(i - 1, j) == 'b' && field(i - 2, j) == null)
+                            {
+                                checkfour = 0;
+                            }
+                            else if (field(i + 3, j) == null && field(i + 2, j) == 'b' && field(i + 1, j) == 'b' && field(i - 1, j) == 'b' && field(i - 2, j) == 'w')
+                            {
+                                checkfour = 1;
+                            }
+                            else if (field(i + 3, j) == 'w' && field(i + 2, j) == 'b' && field(i + 1, j) == 'b' && field(i - 1, j) == 'b' && field(i - 2, j) == null)
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        if ((i > 0) && (i < 12))
+                        {
+                            if (field(i - 1, j) == null && field(i + 1, j) == 'b' && field(i + 2, j) == 'b' && field(i + 3, j) == 'b' && field(i + 4, j) == null)
+                            {
+                                checkfour = 0;
+                            }
+                            else if (field(i - 1, j) == null && field(i + 1, j) == 'b' && field(i + 2, j) == 'b' && field(i + 3, j) == 'b' && field(i + 4, j) == 'w')
+                            {
+                                checkfour = 1;
+                            }
+                            else if (field(i - 1, j) == 'w' && field(i + 1, j) == 'b' && field(i + 2, j) == 'b' && field(i + 3, j) == 'b' && field(i + 4, j) == null)
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        //왼쪽오른쪽
+                        if ((j > 3) && (j < 15))
+                        {
+                            if (field(i, j + 1) == null && field(i, j - 1) == 'b' && field(i, j - 2) == 'b' && field(i, j - 3) == 'b' && field(i, j - 4) == null)
+                            {
+                                checkfour = 0;
+                            }
+                            else if (field(i, j + 1) == null && field(i, j - 1) == 'b' && field(i, j - 2) == 'b' && field(i, j - 3) == 'b' && field(i, j - 4) == 'w')
+                            {
+                                checkfour = 1;
+                            }
+                            else if (field(i, j + 1) == 'w' && field(i, j - 1) == 'b' && field(i, j - 2) == 'b' && field(i, j - 3) == 'b' && field(i, j - 4) == null)
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        if ((j > 2) && (j < 14))
+                        {
+                            if (field(i, j + 2) == null && field(i, j + 1) == 'b' && field(i, j - 1) == 'b' && field(i, j - 2) == 'b' && field(i, j - 3) == null)
+                            {
+                                checkfour = 0;
+                            }
+                            else if (field(i, j + 2) == null && field(i, j + 1) == 'b' && field(i, j - 1) == 'b' && field(i, j - 2) == 'b' && field(i, j - 3) == 'w')
+                            {
+                                checkfour = 1;
+                            }
+                            else if (field(i, j + 2) == 'w' && field(i, j + 1) == 'b' && field(i, j - 1) == 'b' && field(i, j - 2) == 'b' && field(i, j - 3) == null)
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        if ((j > 1) && (j < 13))
+                        {
+                            if (field(i, j + 3) == null && field(i, j + 2) == 'b' && field(i, j + 1) == 'b' && field(i, j - 1) == 'b' && field(i, j - 2) == null)
+                            {
+                                checkfour = 0;
+                            }
+                            else if (field(i, j + 3) == null && field(i, j + 2) == 'b' && field(i, j + 1) == 'b' && field(i, j - 1) == 'b' && field(i, j - 2) == 'w')
+                            {
+                                checkfour = 1;
+                            }
+                            else if (field(i, j + 3) == 'w' && field(i, j + 2) == 'b' && field(i, j + 1) == 'b' && field(i, j - 1) == 'b' && field(i, j - 2) == null)
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        if ((j > 0) && (j < 12))
+                        {
+                            if (field(i, j - 1) == null && field(i, j + 1) == 'b' && field(i, j + 2) == 'b' && field(i, j + 3) == 'b' && field(i, j + 4) == null)
+                            {
+                                checkfour = 0;
+                            }
+                            else if (field(i, j - 1) == 'w' && field(i, j + 1) == 'b' && field(i, j + 2) == 'b' && field(i, j + 3) == 'b' && field(i, j + 4) == null)
+                            {
+                                checkfour = 1;
+                            }
+                            else if (field(i, j - 1) == null && field(i, j + 1) == 'b' && field(i, j + 2) == 'b' && field(i, j + 3) == 'b' && field(i, j + 4) == 'w')
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        //위오른쪽방향대각선
+                        if ((i > 3) && (i < 15) && (j < 12) && (j > 0))
+                        {
+                            if (field(i + 1, j - 1) == null && field(i - 1, j + 1) == 'b' && field(i - 2, j + 2) == 'b' && field(i - 3, j + 3) == 'b' && field(i - 4, j + 4) == null)
+                            {
+                                checkfour = 0;
+                            }
+                            else if (field(i + 1, j - 1) == 'w' && field(i - 1, j + 1) == 'b' && field(i - 2, j + 2) == 'b' && field(i - 3, j + 3) == 'b' && field(i - 4, j + 4) == null)
+                            {
+                                checkfour = 1;
+                            }
+                            else if (field(i + 1, j - 1) == null && field(i - 1, j + 1) == 'b' && field(i - 2, j + 2) == 'b' && field(i - 3, j + 3) == 'b' && field(i - 4, j + 4) == 'w')
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        if ((i > 2) && (i < 14) && (j < 13) && (j > 1))
+                        {
+                            if (field(i - 3, j + 3) == null && field(i - 1, j + 1) == 'b' && field(i - 2, j + 2) == 'b' && field(i + 1, j - 1) == 'b' && field(i + 2, j - 2) == null)
+                            {
+                                checkfour = 0;
+                            }
+                            else if (field(i - 3, j + 3) == 'w' && field(i - 1, j + 1) == 'b' && field(i - 2, j + 2) == 'b' && field(i + 1, j - 1) == 'b' && field(i + 2, j - 2) == null)
+                            {
+                                checkfour = 1;
+                            }
+                            else if (field(i - 3, j + 3) == null && field(i - 1, j + 1) == 'b' && field(i - 2, j + 2) == 'b' && field(i + 1, j - 1) == 'b' && field(i + 2, j - 2) == 'w')
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        if ((i > 1) && (i < 13) && (j < 14) && (j > 2))
+                        {
+                            if (field(i - 2, j + 2) == null && field(i - 1, j + 1) == 'b' && field(i + 1, j - 1) == 'b' && field(i + 2, j - 2) == 'b' && field(i + 3, j - 3) == null)
+                            {
+                                checkfour = 0;
+                            }
+                            else if (field(i - 2, j + 2) == 'w' && field(i - 1, j + 1) == 'b' && field(i + 1, j - 1) == 'b' && field(i + 2, j - 2) == 'b' && field(i + 3, j - 3) == null)
+                            {
+                                checkfour = 1;
+                            }
+                            else if (field(i - 2, j + 2) == null && field(i - 1, j + 1) == 'b' && field(i + 1, j - 1) == 'b' && field(i + 2, j - 2) == 'b' && field(i + 3, j - 3) == 'w')
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        if ((i > 0) && (i < 12) && (j < 15) && (j > 3))
+                        {
+                            if (field(i - 1, j + 1) == null && field(i + 1, j - 1) == 'b' && field(i + 2, j - 2) == 'b' && field(i + 3, j - 3) == 'b' && field(i + 4, j - 4) == null)
+                            {
+                                checkfour = 0;
+                            }
+                            else if (field(i - 1, j + 1) == 'w' && field(i + 1, j - 1) == 'b' && field(i + 2, j - 2) == 'b' && field(i + 3, j - 3) == 'b' && field(i + 4, j - 4) == null)
+                            {
+                                checkfour = 1;
+                            }
+                            else if (field(i - 1, j + 1) == null && field(i + 1, j - 1) == 'b' && field(i + 2, j - 2) == 'b' && field(i + 3, j - 3) == 'b' && field(i + 4, j - 4) == 'w')
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        //위왼쪽방향대각선
+                        if ((i > 3) && (i < 15) && (j > 3) && (j < 15))
+                        {
+                            if (field(i + 1, j + 1) == null && field(i - 1, j - 1) == 'b' && field(i - 2, j - 2) == 'b' && field(i - 3, j - 3) == 'b' && field(i - 4, j - 4) == null)
+                            {
+                                checkfour = 0;
+                            }
+                            else if (field(i + 1, j + 1) == 'w' && field(i - 1, j - 1) == 'b' && field(i - 2, j - 2) == 'b' && field(i - 3, j - 3) == 'b' && field(i - 4, j - 4) == null)
+                            {
+                                checkfour = 1;
+                            }
+                            else if (field(i + 1, j + 1) == null && field(i - 1, j - 1) == 'b' && field(i - 2, j - 2) == 'b' && field(i - 3, j - 3) == 'b' && field(i - 4, j - 4) == 'w')
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        if ((i > 2) && (i < 14) && (j > 2) && (j < 14))
+                        {
+                            if (field(i - 3, j - 3) == null && field(i - 1, j - 1) == 'b' && field(i - 2, j - 2) == 'b' && field(i + 1, j + 1) == 'b' && field(i + 2, j + 2) == null)
+                            {
+                                checkfour = 0;
+                            }
+                            else if (field(i - 3, j - 3) == 'w' && field(i - 1, j - 1) == 'b' && field(i - 2, j - 2) == 'b' && field(i + 1, j + 1) == 'b' && field(i + 2, j + 2) == null)
+                            {
+                                checkfour = 1;
+                            }
+                            else if (field(i - 3, j - 3) == null && field(i - 1, j - 1) == 'b' && field(i - 2, j - 2) == 'b' && field(i + 1, j + 1) == 'b' && field(i + 2, j + 2) == 'w')
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        if ((i > 1) && (i < 13) && (j > 1) && (j < 13))
+                        {
+                            if (field(i - 2, j - 2) == null && field(i - 1, j - 1) == 'b' && field(i + 1, j + 1) == 'b' && field(i + 2, j + 2) == 'b' && field(i + 3, j + 3) == null)
+                            {
+                                checkfour = 0;
+                            }
+                            else if (field(i - 2, j - 2) == 'w' && field(i - 1, j - 1) == 'b' && field(i + 1, j + 1) == 'b' && field(i + 2, j + 2) == 'b' && field(i + 3, j + 3) == null)
+                            {
+                                checkfour = 1;
+                            }
+                            else if (field(i - 2, j - 2) == null && field(i - 1, j - 1) == 'b' && field(i + 1, j + 1) == 'b' && field(i + 2, j + 2) == 'b' && field(i + 3, j + 3) == 'w')
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        if ((i > 0) && (i < 12) && (j > 0) && (i < 12))
+                        {
+                            if (field(i - 1, j - 1) == null && field(i + 1, j + 1) == 'b' && field(i + 2, j + 2) == 'b' && field(i + 3, j + 3) == 'b' && field(i + 4, j + 4) == null)
+                            {
+                                checkfour = 0;
+                            }
+                            else if (field(i - 1, j - 1) == 'w' && field(i + 1, j + 1) == 'b' && field(i + 2, j + 2) == 'b' && field(i + 3, j + 3) == 'b' && field(i + 4, j + 4) == null)
+                            {
+                                checkfour = 1;
+                            }
+                            else if (field(i - 1, j - 1) == null && field(i + 1, j + 1) == 'b' && field(i + 2, j + 2) == 'b' && field(i + 3, j + 3) == 'b' && field(i + 4, j + 4) == 'w')
+                            {
+                                checkfour = 1;
+                            }
+                        }
+                        /*******************************************************/
+                        /******************3이 있는지 확인**********************/
+                        //위아래
+                        if ((i > 2) && (i < 15))
+                        {
+                            if (field(i + 1, j) == null && field(i - 1, j) == 'b' && field(i - 2, j) == 'b' && field(i - 3, j) == null)
+                            {
+                                checkthree = 0;
+                            }
+                            else if (field(i + 1, j) == 'w' && field(i - 1, j) == 'b' && field(i - 2, j) == 'b' && field(i - 3, j) == null)
+                            {
+                                checkthree = 1;
+                            }
+                            else if (field(i + 1, j) == null && field(i - 1, j) == 'b' && field(i - 2, j) == 'b' && field(i - 3, j) == 'w')
+                            {
+                                checkthree = 1;
+                            }
+                        }
+                        if ((i > 1) && (i < 14))
+                        {
+                            if (field(i + 2, j) == null && field(i + 1, j) == 'b' && field(i - 1, j) == 'b' && field(i - 2, j) == null)
+                            {
+                                checkthree = 0;
+                            }
+                            else if (field(i + 2, j) == 'w' && field(i + 1, j) == 'b' && field(i - 1, j) == 'b' && field(i - 2, j) == null)
+                            {
+                                checkthree = 1;
+                            }
+                            else if (field(i + 2, j) == null && field(i + 1, j) == 'b' && field(i - 1, j) == 'b' && field(i - 2, j) == 'w')
+                            {
+                                checkthree = 1;
+                            }
+                        }
+                        if ((i > 0) && (i < 13))
+                        {
+                            if (field(i + 3, j) == null && field(i + 2, j) == 'b' && field(i + 1, j) == 'b' && field(i - 1, j) == null)
+                            {
+                                checkthree = 0;
+                            }
+                            else if (field(i + 3, j) == 'w' && field(i + 2, j) == 'b' && field(i + 1, j) == 'b' && field(i - 1, j) == null)
+                            {
+                                checkthree = 1;
+                            }
+                            else if (field(i + 3, j) == null && field(i + 2, j) == 'b' && field(i + 1, j) == 'b' && field(i - 1, j) == 'w')
+                            {
+                                checkthree = 1;
+                            }
+                        }
+                        //왼쪽오른쪽
+                        if ((j > 2) && (j < 15))
+                        {
+                            if (field(i, j + 1) == null && field(i, j - 1) == 'b' && field(i, j - 2) == 'b' && field(i, j - 3) == null)
+                            {
+                                checkthree = 0;
+                            }
+                            else if (field(i, j + 1) == 'w' && field(i, j - 1) == 'b' && field(i, j - 2) == 'b' && field(i, j - 3) == null)
+                            {
+                                checkthree = 1;
+                            }
+                            else if (field(i, j + 1) == null && field(i, j - 1) == 'b' && field(i, j - 2) == 'b' && field(i, j - 3) == 'w')
+                            {
+                                checkthree = 1;
+                            }
+                        }
+                        if ((j > 1) && (j < 14))
+                        {
+                            if (field(i, j + 2) == null && field(i, j + 1) == 'b' && field(i, j - 1) == 'b' && field(i, j - 2) == null)
+                            {
+                                checkthree = 0;
+                            }
+                            else if (field(i, j + 2) == 'w' && field(i, j + 1) == 'b' && field(i, j - 1) == 'b' && field(i, j - 2) == null)
+                            {
+                                checkthree = 1;
+                            }
+                            else if (field(i, j + 2) == null && field(i, j + 1) == 'b' && field(i, j - 1) == 'b' && field(i, j - 2) == 'w')
+                            {
+                                checkthree = 1;
+                            }
+                        }
+                        if ((j > 0) && (j < 13))
+                        {
+                            if (field(i, j + 3) == null && field(i, j + 2) == 'b' && field(i, j + 1) == 'b' && field(i, j - 1) == null)
+                            {
+                                checkthree = 0;
+                            }
+                            else if (field(i, j + 3) == 'w' && field(i, j + 2) == 'b' && field(i, j + 1) == 'b' && field(i, j - 1) == null)
+                            {
+                                checkthree = 1;
+                            }
+                            else if (field(i, j + 3) == null && field(i, j + 2) == 'b' && field(i, j + 1) == 'b' && field(i, j - 1) == 'w')
+                            {
+                                checkthree = 1;
+                            }
+                        }
+                        //위오른쪽방향대각선
+                        if ((i > 2) && (i < 15) && (j < 13) && (j > 0))
+                        {
+                            if (field(i + 1, j - 1) == null && field(i - 1, j + 1) == 'b' && field(i - 2, j + 2) == 'b' && field(i - 3, j + 3) == null)
+                            {
+                                checkthree = 0;
+                            }
+                            else if (field(i + 1, j - 1) == 'w' && field(i - 1, j + 1) == 'b' && field(i - 2, j + 2) == 'b' && field(i - 3, j + 3) == null)
+                            {
+                                checkthree = 1;
+                            }
+                            else if (field(i + 1, j - 1) == null && field(i - 1, j + 1) == 'b' && field(i - 2, j + 2) == 'b' && field(i - 3, j + 3) == 'w')
+                            {
+                                checkthree = 1;
+                            }
+                        }
+                        if ((i > 1) && (i < 14) && (j < 14) && (j > 1))
+                        {
+                            if (field(i - 1, j + 1) == 'b' && field(i - 2, j + 2) == null && field(i + 1, j - 1) == 'b' && field(i + 2, j - 2) == null)
+                            {
+                                checkthree = 0;
+                            }
+                            else if (field(i - 1, j + 1) == 'b' && field(i - 2, j + 2) == 'w' && field(i + 1, j - 1) == 'b' && field(i + 2, j - 2) == null)
+                            {
+                                checkthree = 1;
+                            }
+                            else if (field(i - 1, j + 1) == 'b' && field(i - 2, j + 2) == null && field(i + 1, j - 1) == 'b' && field(i + 2, j - 2) == 'w')
+                            {
+                                checkthree = 1;
+                            }
+                        }
+                        if ((i > 0) && (i < 13) && (j < 15) && (j > 2))
+                        {
+                            if (field(i - 1, j + 1) == null && field(i + 1, j - 1) == 'b' && field(i + 2, j - 2) == 'b' && field(i + 3, j - 3) == null)
+                            {
+                                checkthree = 0;
+                            }
+                            else if (field(i - 1, j + 1) == 'w' && field(i + 1, j - 1) == 'b' && field(i + 2, j - 2) == 'b' && field(i + 3, j - 3) == null)
+                            {
+                                checkthree = 1;
+                            }
+                            else if (field(i - 1, j + 1) == null && field(i + 1, j - 1) == 'b' && field(i + 2, j - 2) == 'b' && field(i + 3, j - 3) == 'w')
+                            {
+                                checkthree = 1;
+                            }
+                        }
+                        //위왼쪽방향대각선
+                        if ((i > 2) && (i < 15) && (j > 2) && (j < 15))
+                        {
+                            if (field(i + 1, j + 1) == null && field(i - 1, j - 1) == 'b' && field(i - 2, j - 2) == 'b' && field(i - 3, j - 3) == null)
+                            {
+                                checkthree = 0;
+                            }
+                            else if (field(i + 1, j + 1) == 'w' && field(i - 1, j - 1) == 'b' && field(i - 2, j - 2) == 'b' && field(i - 3, j - 3) == null)
+                            {
+                                checkthree = 1;
+                            }
+                            else if (field(i + 1, j + 1) == null && field(i - 1, j - 1) == 'b' && field(i - 2, j - 2) == 'b' && field(i - 3, j - 3) == 'w')
+                            {
+                                checkthree = 1;
+                            }
+                        }
+                        if ((i > 1) && (i < 14) && (j > 1) && (j < 14))
+                        {
+                            if (field(i - 2, j - 2) == null && field(i - 1, j - 1) == 'b' && field(i + 1, j + 1) == 'b' && field(i + 2, j + 2) == null)
+                            {
+                                checkthree = 0;
+                            }
+                            else if (field(i - 2, j - 2) == 'w' && field(i - 1, j - 1) == 'b' && field(i + 1, j + 1) == 'b' && field(i + 2, j + 2) == null)
+                            {
+                                checkthree = 1;
+                            }
+                            else if (field(i - 2, j - 2) == null && field(i - 1, j - 1) == 'b' && field(i + 1, j + 1) == 'b' && field(i + 2, j + 2) == 'w')
+                            {
+                                checkthree = 1;
+                            }
+                        }
+                        if ((i > 0) && (i < 13) && (j > 0) && (j < 13))
+                        {
+                            if (field(i - 1, j - 1) == null && field(i + 1, j + 1) == 'b' && field(i + 2, j + 2) == 'b' && field(i + 3, j + 3) == null)
+                            {
+                                checkthree = 0;
+                            }
+                            else if (field(i - 1, j - 1) == 'w' && field(i + 1, j + 1) == 'b' && field(i + 2, j + 2) == 'b' && field(i + 3, j + 3) == null)
+                            {
+                                checkthree = 1;
+                            }
+                            else if (field(i - 1, j - 1) == null && field(i + 1, j + 1) == 'b' && field(i + 2, j + 2) == 'b' && field(i + 3, j + 3) == 'w')
+                            {
+                                checkthree = 1;
+                            }
+                        }
+                        /*******************************************************/
+                        if ((checkfour + checkthree) == 1)
+                        {
+                            showValue(i, j, 70);
+                        }//3이나 4쪽 둘중에 하나가 1일경우
+                        if ((checkfour + checkthree) == 2)
+                        {
+                            showValue(i, j, 70);
+                        }//3이나 4쪽 둘다 1일경우                        
+                    }
+                }
+            }
             #endregion
 
             // (5) 상대편의 방어가 없는 사목 - 97점
@@ -627,40 +1301,124 @@ namespace New_Jarvis
             {
                 for (int j = 0; j < 15; j++)
                 {
-                    if (black(i, j) == 0)
+                    if (field(i, j) == null)
                     {
                         //위아래
-                        if (i > 3)
+                        if ((i > 3) && (i < 15))
                         {
-                            if (black(i - 1, j) == 1 && black(i - 2, j) == 1 && black(i - 3, j) == 1)
+                            if (field(i + 1, j) == null && field(i - 1, j) == 'b' && field(i - 2, j) == 'b' && field(i - 3, j) == 'b' && field(i - 4, j) == null)
+                            {
+                                showValue(i, j, 97); 
+                            }
+                        }
+                        if ((i > 2) && (i < 14))
+                        {
+                            if (field(i + 2, j) == null && field(i + 1, j) == 'b' && field(i - 1, j) == 'b' && field(i - 2, j) == 'b' && field(i - 3, j) == null)
                             {
                                 showValue(i, j, 97);
                             }
                         }
-                        if ((i > 2) &&(i<14))
+                        if ((i > 1) && (i < 13))
                         {
-                            if (black(i + 1, j) == 1 && black(i - 1, j) == 1 && black(i - 2, j) == 1)
+                            if (field(i + 3, j) == null && field(i + 2, j) == 'b' && field(i + 1, j) == 'b' && field(i - 1, j) == 'b' && field(i - 2, j) == null)
                             {
                                 showValue(i, j, 97);
                             }
                         }
-                        if ((i>1) && (i<13))
+                        if ((i > 0) && (i < 12))
                         {
-                            if (black(i +2 , j) == 1 && black(i +1, j) == 1 && black(i - 1, j) == 1)
-                            {
-                                showValue(i, j, 97);
-                            }
-                        }
-                        if (i < 12)
-                        {
-                            if (black(i + 1, j) == 1 && black(i + 2, j) == 1 && black(i + 3, j) == 1)
+                            if (field(i - 1, j) == null && field(i + 1, j) == 'b' && field(i + 2, j) == 'b' && field(i + 3, j) == 'b' && field(i + 4, j) == null)
                             {
                                 showValue(i, j, 97);
                             }
                         }
                         //왼쪽오른쪽
+                        if ((j > 3) && (j < 15))
+                        {
+                            if (field(i, j + 1) == null && field(i, j - 1) == 'b' && field(i, j - 2) == 'b' && field(i, j - 3) == 'b' && field(i, j - 4) == null)
+                            {
+                                showValue(i, j, 97);
+                            }
+                        }
+                        if ((j > 2) && (j < 14))
+                        {
+                            if (field(i, j + 2) == null && field(i, j + 1) == 'b' && field(i, j - 1) == 'b' && field(i, j - 2) == 'b' && field(i, j - 3) == null)
+                            {
+                                showValue(i, j, 97);
+                            }
+                        }
+                        if ((j > 1) && (j < 13))
+                        {
+                            if (field(i, j + 3) == null && field(i, j + 2) == 'b' && field(i, j + 1) == 'b' && field(i, j - 1) == 'b' && field(i, j - 2) == null)
+                            {
+                                showValue(i, j, 97);
+                            }
+                        }
+                        if ((j > 0) && (j < 12))
+                        {
+                            if (field(i, j - 1) == null && field(i, j + 1) == 'b' && field(i, j + 2) == 'b' && field(i, j + 3) == 'b' && field(i, j + 4) == null)
+                            {
+                                showValue(i, j, 97);
+                            }
+                        }
                         //위오른쪽방향대각선
+                        if ((i > 3) && (i < 15) && (j < 12) && (j > 0))
+                        {
+                            if (field(i + 1, j - 1) == null && field(i - 1, j + 1) == 1 && field(i - 2, j + 2) == 1 && field(i - 3, j + 3) == 1 && field(i - 4, j + 4) == null)
+                            {
+                                showValue(i, j, 97);
+                            }
+                        }
+                        if ((i > 2) && (i < 14) && (j < 13) && (j > 1))
+                        {
+                            if (field(i - 3, j + 3) == null && field(i - 1, j + 1) == 1 && field(i - 2, j + 2) == 1 && field(i + 1, j - 1) == 1 && field(i + 2, j - 2) == null)
+                            {
+                                showValue(i, j, 97);
+                            }
+                        }
+                        if ((i > 1) && (i < 13) && (j < 14) && (j > 2))
+                        {
+                            if (field(i - 2, j + 2) == null && field(i - 1, j + 1) == 1 && field(i + 1, j - 1) == 1 && field(i + 2, j - 2) == 1 && field(i + 3, j - 3) == null)
+                            {
+                                showValue(i, j, 97);
+                            }
+                        }
+                        if ((i > 0) && (i < 12) && (j < 15) && (j > 3))
+                        {
+                            if (field(i - 1, j + 1) == null && field(i + 1, j - 1) == 1 && field(i + 2, j - 2) == 1 && field(i + 3, j - 3) == 1 && field(i + 4, j - 4) == null)
+                            {
+                                showValue(i, j, 97);
+                            }
+                        }
                         //위왼쪽방향대각선
+                        if ((i > 3) && (i < 15) && (j > 3) && (j < 15))
+                        {
+                            if (field(i + 1, j + 1) == null && field(i - 1, j - 1) == 1 && field(i - 2, j - 2) == 1 && field(i - 3, j - 3) == 1 && field(i - 4, j - 4) == null)
+                            {
+                                showValue(i, j, 97);
+                            }
+                        }
+                        if ((i > 2) && (i < 14) && (j > 2) && (j < 14))
+                        {
+                            if (field(i - 3, j - 3) == null && field(i - 1, j - 1) == 1 && field(i - 2, j - 2) == 1 && field(i + 1, j + 1) == 1 && field(i + 2, j + 2) == null)
+                            {
+                                showValue(i, j, 97);
+                            }
+                        }
+                        if ((i > 1) && (i < 13) && (j > 1) && (j < 13))
+                        {
+                            if (field(i - 2, j - 2) == null && field(i - 1, j - 1) == 1 && field(i + 1, j + 1) == 1 && field(i + 2, j + 2) == 1 && field(i + 3, j + 3) == null)
+                            {
+                                showValue(i, j, 97);
+                            }
+                        }
+                        if ((i > 0) && (i < 12) && (j > 0) && (i < 12))
+                        {
+                            if (field(i - 1, j - 1) == null && field(i + 1, j + 1) == 1 && field(i + 2, j + 2) == 1 && field(i + 3, j + 3) == 1 && field(i + 4, j + 4) == null)
+                            {
+                                showValue(i, j, 97);
+                            }
+                        }
                     }
                 }
             }
@@ -669,6 +1427,131 @@ namespace New_Jarvis
             // (6) 상대편의 방어가 없고 중간에 하나의 빈칸이 있는 사목 - 33점
             makeBlack();
             #region 방어 없고 중간에 하나의 빈칸이 있는 사목
+            for (i = 0; i < 15; i++)
+            {
+                for (int j = 0; j < 15; j++)
+                {
+                    if (field(i, j) == null)
+                    {
+                        //위아래
+                        if ((i > 3) && (i < 15))
+                        {
+                            if (field(i + 1, j) == null && field(i - 1, j) == 'b' && field(i - 2, j) == 'b' && field(i - 3, j) == 'b' && field(i - 4, j) == null)
+                            {
+                                showValue(i, j, 97);
+                            }
+                        }
+                        if ((i > 2) && (i < 14))
+                        {
+                            if (field(i + 2, j) == null && field(i + 1, j) == 'b' && field(i - 1, j) == 'b' && field(i - 2, j) == 'b' && field(i - 3, j) == null)
+                            {
+                                showValue(i, j, 97);
+                            }
+                        }
+                        if ((i > 1) && (i < 13))
+                        {
+                            if (field(i + 3, j) == null && field(i + 2, j) == 'b' && field(i + 1, j) == 'b' && field(i - 1, j) == 'b' && field(i - 2, j) == null)
+                            {
+                                showValue(i, j, 97);
+                            }
+                        }
+                        if ((i > 0) && (i < 12))
+                        {
+                            if (field(i - 1, j) == null && field(i + 1, j) == 'b' && field(i + 2, j) == 'b' && field(i + 3, j) == 'b' && field(i + 4, j) == null)
+                            {
+                                showValue(i, j, 97);
+                            }
+                        }
+                        //왼쪽오른쪽
+                        if ((j > 3) && (j < 15))
+                        {
+                            if (field(i, j + 1) == null && field(i, j - 1) == 'b' && field(i, j - 2) == 'b' && field(i, j - 3) == 'b' && field(i, j - 4) == null)
+                            {
+                                showValue(i, j, 97);
+                            }
+                        }
+                        if ((j > 2) && (j < 14))
+                        {
+                            if (field(i, j + 2) == null && field(i, j + 1) == 'b' && field(i, j - 1) == 'b' && field(i, j - 2) == 'b' && field(i, j - 3) == null)
+                            {
+                                showValue(i, j, 97);
+                            }
+                        }
+                        if ((j > 1) && (j < 13))
+                        {
+                            if (field(i, j + 3) == null && field(i, j + 2) == 'b' && field(i, j + 1) == 'b' && field(i, j - 1) == 'b' && field(i, j - 2) == null)
+                            {
+                                showValue(i, j, 97);
+                            }
+                        }
+                        if ((j > 0) && (j < 12))
+                        {
+                            if (field(i, j - 1) == null && field(i, j + 1) == 'b' && field(i, j + 2) == 'b' && field(i, j + 3) == 'b' && field(i, j + 4) == null)
+                            {
+                                showValue(i, j, 97);
+                            }
+                        }
+                        //위오른쪽방향대각선
+                        if ((i > 3) && (i < 15) && (j < 12) && (j > 0))
+                        {
+                            if (field(i + 1, j - 1) == null && field(i - 1, j + 1) == 1 && field(i - 2, j + 2) == 1 && field(i - 3, j + 3) == 1 && field(i - 4, j + 4) == null)
+                            {
+                                showValue(i, j, 97);
+                            }
+                        }
+                        if ((i > 2) && (i < 14) && (j < 13) && (j > 1))
+                        {
+                            if (field(i - 3, j + 3) == null && field(i - 1, j + 1) == 1 && field(i - 2, j + 2) == 1 && field(i + 1, j - 1) == 1 && field(i + 2, j - 2) == null)
+                            {
+                                showValue(i, j, 97);
+                            }
+                        }
+                        if ((i > 1) && (i < 13) && (j < 14) && (j > 2))
+                        {
+                            if (field(i - 2, j + 2) == null && field(i - 1, j + 1) == 1 && field(i + 1, j - 1) == 1 && field(i + 2, j - 2) == 1 && field(i + 3, j - 3) == null)
+                            {
+                                showValue(i, j, 97);
+                            }
+                        }
+                        if ((i > 0) && (i < 12) && (j < 15) && (j > 3))
+                        {
+                            if (field(i - 1, j + 1) == null && field(i + 1, j - 1) == 1 && field(i + 2, j - 2) == 1 && field(i + 3, j - 3) == 1 && field(i + 4, j - 4) == null)
+                            {
+                                showValue(i, j, 97);
+                            }
+                        }
+                        //위왼쪽방향대각선
+                        if ((i > 3) && (i < 15) && (j > 3) && (j < 15))
+                        {
+                            if (field(i + 1, j + 1) == null && field(i - 1, j - 1) == 1 && field(i - 2, j - 2) == 1 && field(i - 3, j - 3) == 1 && field(i - 4, j - 4) == null)
+                            {
+                                showValue(i, j, 97);
+                            }
+                        }
+                        if ((i > 2) && (i < 14) && (j > 2) && (j < 14))
+                        {
+                            if (field(i - 3, j - 3) == null && field(i - 1, j - 1) == 1 && field(i - 2, j - 2) == 1 && field(i + 1, j + 1) == 1 && field(i + 2, j + 2) == null)
+                            {
+                                showValue(i, j, 97);
+                            }
+                        }
+                        if ((i > 1) && (i < 13) && (j > 1) && (j < 13))
+                        {
+                            if (field(i - 2, j - 2) == null && field(i - 1, j - 1) == 1 && field(i + 1, j + 1) == 1 && field(i + 2, j + 2) == 1 && field(i + 3, j + 3) == null)
+                            {
+                                showValue(i, j, 97);
+                            }
+                        }
+                        if ((i > 0) && (i < 12) && (j > 0) && (i < 12))
+                        {
+                            if (field(i - 1, j - 1) == null && field(i + 1, j + 1) == 1 && field(i + 2, j + 2) == 1 && field(i + 3, j + 3) == 1 && field(i + 4, j + 4) == null)
+                            {
+                                showValue(i, j, 97);
+                            }
+                        }
+                    }
+                }
+            }
             #endregion
 
             // (7) 한쪽에 상대편의 방어가 있고 중간에 하나의 빈칸이 있는 사목 - 32점
