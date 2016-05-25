@@ -35,6 +35,10 @@
             this.resetButton = new MetroFramework.Controls.MetroButton();
             this.valueButton2 = new MetroFramework.Controls.MetroButton();
             this.resetButton2 = new MetroFramework.Controls.MetroButton();
+            this.helpBox = new MetroFramework.Controls.MetroComboBox();
+            this.helpButton = new MetroFramework.Controls.MetroButton();
+            this.blackValue = new MetroFramework.Controls.MetroLabel();
+            this.whiteValue = new MetroFramework.Controls.MetroLabel();
             this.metroTabControl1.SuspendLayout();
             this.metroTabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.fieldView)).BeginInit();
@@ -114,11 +118,56 @@
             this.resetButton2.UseSelectable = true;
             this.resetButton2.Click += new System.EventHandler(this.resetButton2_Click);
             // 
+            // helpBox
+            // 
+            this.helpBox.FormattingEnabled = true;
+            this.helpBox.ItemHeight = 23;
+            this.helpBox.Items.AddRange(new object[] {
+            "Black",
+            "White"});
+            this.helpBox.Location = new System.Drawing.Point(272, 28);
+            this.helpBox.Name = "helpBox";
+            this.helpBox.Size = new System.Drawing.Size(96, 29);
+            this.helpBox.TabIndex = 5;
+            this.helpBox.UseSelectable = true;
+            // 
+            // helpButton
+            // 
+            this.helpButton.Location = new System.Drawing.Point(459, 34);
+            this.helpButton.Name = "helpButton";
+            this.helpButton.Size = new System.Drawing.Size(102, 23);
+            this.helpButton.TabIndex = 6;
+            this.helpButton.Text = "Help Me Jarvis";
+            this.helpButton.UseSelectable = true;
+            this.helpButton.Click += new System.EventHandler(this.metroButton1_Click);
+            // 
+            // blackValue
+            // 
+            this.blackValue.AutoSize = true;
+            this.blackValue.Location = new System.Drawing.Point(463, 451);
+            this.blackValue.Name = "blackValue";
+            this.blackValue.Size = new System.Drawing.Size(90, 19);
+            this.blackValue.TabIndex = 7;
+            this.blackValue.Text = "B\'s total score";
+            // 
+            // whiteValue
+            // 
+            this.whiteValue.AutoSize = true;
+            this.whiteValue.Location = new System.Drawing.Point(463, 479);
+            this.whiteValue.Name = "whiteValue";
+            this.whiteValue.Size = new System.Drawing.Size(95, 19);
+            this.whiteValue.TabIndex = 8;
+            this.whiteValue.Text = "W\'s total score";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(569, 550);
+            this.Controls.Add(this.whiteValue);
+            this.Controls.Add(this.blackValue);
+            this.Controls.Add(this.helpButton);
+            this.Controls.Add(this.helpBox);
             this.Controls.Add(this.resetButton2);
             this.Controls.Add(this.valueButton2);
             this.Controls.Add(this.resetButton);
@@ -131,6 +180,7 @@
             this.metroTabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.fieldView)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -143,6 +193,10 @@
         private MetroFramework.Controls.MetroButton resetButton;
         private MetroFramework.Controls.MetroButton valueButton2;
         private MetroFramework.Controls.MetroButton resetButton2;
+        private MetroFramework.Controls.MetroComboBox helpBox;
+        private MetroFramework.Controls.MetroButton helpButton;
+        private MetroFramework.Controls.MetroLabel blackValue;
+        private MetroFramework.Controls.MetroLabel whiteValue;
     }
 }
 

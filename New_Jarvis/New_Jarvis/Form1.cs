@@ -35,6 +35,9 @@ namespace New_Jarvis
                 }
             }
 
+            // default = "Black"
+            helpBox.SelectedIndex = 0;
+
             // for Action
             am = new ActionManager(fieldView);
         }
@@ -48,7 +51,7 @@ namespace New_Jarvis
         // Calculate Value for White
         private void valueButton2_Click(object sender, EventArgs e)
         {
-
+            am.valueFunctionForWhite();
         }
 
         // Reset Field
@@ -81,6 +84,23 @@ namespace New_Jarvis
                 }
             }
             am.resetValue();
+        }
+
+        // Help Me Jarvis Button
+        private void metroButton1_Click(object sender, EventArgs e)
+        {
+            int ret;
+            ret = am.helpMeJarvis(helpBox.SelectedIndex, blackValue, whiteValue);
+            if (ret == -999)
+            {
+                // Resign
+                MetroMessageBox.Show(this, "Resign.");
+            }
+            else if (ret == 999)
+            {
+                // Resign
+                MetroMessageBox.Show(this, "Win.");
+            }
         }
     }
 }
