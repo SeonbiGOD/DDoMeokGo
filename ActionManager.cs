@@ -526,32 +526,33 @@ namespace New_Jarvis
             // (2) 사사 - 99점
             makeBlack();
             #region 사사
-           
+
             int count;
+            int x = 0, y = 0, xy = 0, oxy = 0;
             for (i = 0; i < 15; i++)
             {
                 for (int j = 0; j < 15; j++)
-                {    
-                    if(field(i,j)==null)
+                {
+                    if (field[i, j] == null)
                     {
-                        int x, y, xy, oxy = 0;
+
                         /***********4확인***************/
                         //위아래
                         if ((i > 3) && (i < 15))
                         {
-                            if (field(i - 1, j) == 'b' && field(i - 2, j) == 'b' && field(i - 3, j) == 'b')
+                            if (field[i - 1, j].Value.ToString() == "B" && field[i - 2, j].Value.ToString() == "B" && field[i - 3, j].Value.ToString() == "B")
                             {
-                                if (field(i + 1, j) == null || field(i - 4, j) == null)
+                                if (field[i + 1, j].Value == null || field[i - 4, j].Value == null)
                                 {
                                     y = 1;
-                                } 
+                                }
                             }
                         }
                         if ((i > 2) && (i < 14))
                         {
-                            if (field(i + 1, j) == 'b' && field(i - 1, j) == 'b' && field(i - 2, j) == 'b')
+                            if (field[i + 1, j].ToString() == "B" && field[i - 1, j].Value.ToString() == "B" && field[i - 2, j].Value.ToString() == "B")
                             {
-                                if (field(i + 2, j) == null || field(i - 3, j) == null)
+                                if (field[i + 2, j].Value == null || field[i - 3, j].Value == null)
                                 {
                                     y = 1;
                                 }
@@ -559,9 +560,9 @@ namespace New_Jarvis
                         }
                         if ((i > 1) && (i < 13))
                         {
-                            if (field(i + 2, j) == 'b' && field(i + 1, j) == 'b' && field(i - 1, j) == 'b')
+                            if (field[i + 2, j].Value.ToString() == "B" && field[i + 1, j].Value.ToString() == "B" && field[i - 1, j].Value.ToString() == "B")
                             {
-                                if (field(i + 3, j) == null || field(i - 2, j) == null)
+                                if (field[i + 3, j].Value == null || field[i - 2, j].Value == null)
                                 {
                                     y = 1;
                                 }
@@ -569,9 +570,9 @@ namespace New_Jarvis
                         }
                         if ((i > 0) && (i < 12))
                         {
-                            if (field(i + 1, j) == 'b' && field(i + 2, j) == 'b' && field(i + 3, j) == 'b')
+                            if (field[i + 1, j].Value.ToString() == "B" && field[i + 2, j].Value.ToString() == "B" && field[i + 3, j].Value.ToString() == "B")
                             {
-                                if (field(i + 4, j) == null || field(i - 1, j) == null)
+                                if (field[i + 4, j].Value == null || field[i - 1, j].Value == null)
                                 {
                                     y = 1;
                                 }
@@ -580,9 +581,9 @@ namespace New_Jarvis
                         //왼쪽오른쪽
                         if ((j > 3) && (j < 15))
                         {
-                            if (field(i, j - 1) == 'b' && field(i, j - 2) == 'b' && field(i, j - 3) == 'b')
+                            if (field[i, j - 1].Value.ToString() == "B" && field[i, j - 2].Value.ToString() == "B" && field[i, j - 3].Value.ToString() == "B")
                             {
-                                if (field(i, j + 1) == null || field(i, j - 4) == null)
+                                if (field[i, j + 1].Value == null || field[i, j - 4].Value == null)
                                 {
                                     x = 1;
                                 }
@@ -590,9 +591,9 @@ namespace New_Jarvis
                         }
                         if ((j > 2) && (j < 14))
                         {
-                            if (field(i, j + 1) == 'b' && field(i, j - 1) == 'b' && field(i, j - 2) == 'b')
+                            if (field[i, j + 1].Value.ToString() == "B" && field[i, j - 1].Value.ToString() == "B" && field[i, j - 2].Value.ToString() == "B")
                             {
-                                if (field(i, j + 2) == null || field(i, j - 3) == null)
+                                if (field[i, j + 2].Value == null || field[i, j - 3].Value == null)
                                 {
                                     x = 1;
                                 }
@@ -600,9 +601,9 @@ namespace New_Jarvis
                         }
                         if ((j > 1) && (j < 13))
                         {
-                            if (field(i, j + 2) == 'b' && field(i, j + 1) == 'b' && field(i, j - 1) == 'b')
+                            if (field[i, j + 2].Value.ToString() == "B" && field[i, j + 1].Value.ToString() == "B" && field[i, j - 1].Value.ToString() == "B")
                             {
-                                if (field(i, j + 3) == null || field(i, j - 2) == null)
+                                if (field[i, j + 3].Value == null || field[i, j - 2].Value == null)
                                 {
                                     x = 1;
                                 }
@@ -610,9 +611,9 @@ namespace New_Jarvis
                         }
                         if ((j > 0) && (j < 12))
                         {
-                            if (field(i, j + 1) == 'b' && field(i, j + 2) == 'b' && field(i, j + 3) == 'b')
+                            if (field[i, j + 1].Value.ToString() == "B" && field[i, j + 2].Value.ToString() == "B" && field[i, j + 3].Value.ToString() == "B")
                             {
-                                if (field(i, j + 4) == null || field(i, j - 1) == null)
+                                if (field[i, j + 4].Value == null || field[i, j - 1].Value == null)
                                 {
                                     x = 1;
                                 }
@@ -621,9 +622,9 @@ namespace New_Jarvis
                         //위오른쪽방향대각선
                         if ((i > 3) && (i < 15) && (j < 12) && (j > 0))
                         {
-                            if (field(i - 1, j + 1) == 'b' && field(i - 2, j + 2) == 'b' && field(i - 3, j + 3) == 'b')
+                            if (field[i - 1, j + 1].Value.ToString() == "B" && field[i - 2, j + 2].Value.ToString() == "B" && field[i - 3, j + 3].Value.ToString() == "B")
                             {
-                                if (field(i + 1, j - 1) == null || field(i - 4, j + 4) == null)
+                                if (field[i + 1, j - 1].Value == null || field[i - 4, j + 4].Value == null)
                                 {
                                     xy = 1;
                                 }
@@ -631,9 +632,9 @@ namespace New_Jarvis
                         }
                         if ((i > 2) && (i < 14) && (j < 13) && (j > 1))
                         {
-                            if (field(i - 1, j + 1) == 'b' && field(i - 2, j + 2) == 'b' && field(i + 1, j - 1) == 'b')
+                            if (field[i - 1, j + 1].Value.ToString() == "B" && field[i - 2, j + 2].Value.ToString() == "B" && field[i + 1, j - 1].Value.ToString() == "B")
                             {
-                                if (field(i + 2, j - 2) == null || field(i - 3, j + 3) == null)
+                                if (field[i + 2, j - 2].Value == null || field[i - 3, j + 3].Value == null)
                                 {
                                     xy = 1;
                                 }
@@ -641,9 +642,9 @@ namespace New_Jarvis
                         }
                         if ((i > 1) && (i < 13) && (j < 14) && (j > 2))
                         {
-                            if (field(i - 1, j + 1) == 'b' && field(i + 1, j - 1) == 'b' && field(i + 2, j - 2) == 'b')
+                            if (field[i - 1, j + 1].Value.ToString() == "B" && field[i + 1, j - 1].Value.ToString() == "B" && field[i + 2, j - 2].Value.ToString() == "B")
                             {
-                                if (field(i + 3, j - 3) == null || field(i - 2, j + 2) == null)
+                                if (field[i + 3, j - 3].Value == null || field[i - 2, j + 2].Value == null)
                                 {
                                     xy = 1;
                                 }
@@ -651,9 +652,9 @@ namespace New_Jarvis
                         }
                         if ((i > 0) && (i < 12) && (j < 15) && (j > 3))
                         {
-                            if (field(i + 1, j - 1) == 'b' && field(i + 2, j - 2) == 'b' && field(i + 3, j - 3) == 'b')
+                            if (field[i + 1, j - 1].Value.ToString() == "B" && field[i + 2, j - 2].Value.ToString() == "B" && field[i + 3, j - 3].Value.ToString() == "B")
                             {
-                                if (field(i + 4, j - $) == null || field(i - 1, j + 1) == null)
+                                if (field[i + 4, j - 4].Value == null || field[i - 1, j + 1].Value == null)
                                 {
                                     xy = 1;
                                 }
@@ -662,9 +663,9 @@ namespace New_Jarvis
                         //위왼쪽방향대각선
                         if ((i > 3) && (i < 15) && (j > 3) && (j < 15))
                         {
-                            if (field(i - 1, j - 1) == 'b' && field(i - 2, j - 2) == 'b' && field(i - 3, j - 3) == 'b')
+                            if (field[i - 1, j - 1].Value.ToString() == "B" && field[i - 2, j - 2].Value.ToString() == "B" && field[i - 3, j - 3].Value.ToString() == "B")
                             {
-                                if (field(i + 1, j + 1) == null || field(i - 4, j - 4) == null)
+                                if (field[i + 1, j + 1].Value == null || field[i - 4, j - 4].Value == null)
                                 {
                                     oxy = 1;
                                 }
@@ -672,9 +673,9 @@ namespace New_Jarvis
                         }
                         if ((i > 2) && (i < 14) && (j > 2) && (j < 14))
                         {
-                            if (field(i - 1, j - 1) == 'b' && field(i - 2, j - 2) == 'b' && field(i + 1, j + 1) == 'b')
+                            if (field[i - 1, j - 1].Value.ToString() == "B" && field[i - 2, j - 2].Value.ToString() == "B" && field[i + 1, j + 1].Value.ToString() == "B")
                             {
-                                if (field(i + 2, j + 2) == null || field(i - 3, j - 3) == null)
+                                if (field[i + 2, j + 2].Value == null || field[i - 3, j - 3].Value == null)
                                 {
                                     oxy = 1;
                                 }
@@ -682,9 +683,9 @@ namespace New_Jarvis
                         }
                         if ((i > 1) && (i < 13) && (j > 1) && (j < 13))
                         {
-                            if (field(i - 1, j - 1) == 'b' && field(i + 1, j + 1) == 'b' && field(i + 2, j + 2) == 'b')
+                            if (field[i - 1, j - 1].Value.ToString() == "B" && field[i + 1, j + 1].Value.ToString() == "B" && field[i + 2, j + 2].Value.ToString() == "B")
                             {
-                                if (field(i + 3, j + 3) == null || field(i - 2, j - 2) == null)
+                                if (field[i + 3, j + 3].Value == null || field[i - 2, j - 2].Value == null)
                                 {
                                     oxy = 1;
                                 }
@@ -692,9 +693,9 @@ namespace New_Jarvis
                         }
                         if ((i > 0) && (i < 12) && (j > 0) && (i < 12))
                         {
-                            if (field(i + 1, j + 1) == 'b' && field(i + 2, j + 2) == 'b' && field(i + 3, j + 3) == 'b')
+                            if (field[i + 1, j + 1].Value.ToString() == "B" && field[i + 2, j + 2].Value.ToString() == "B" && field[i + 3, j + 3].Value.ToString() == "B")
                             {
-                                if (field(i + 4, j + 4) == null || field(i - 1, j - 1) == null)
+                                if (field[i + 4, j + 4].Value == null || field[i - 1, j - 1].Value == null)
                                 {
                                     oxy = 1;
                                 }
@@ -702,9 +703,9 @@ namespace New_Jarvis
                         }
                         /*******************************************************/
                         //만약 2줄이상이 해당되면 사사
-                        if(x+y+xy+oxy >1)
+                        if (x + y + xy + oxy > 1)
                         {
-                            showValue(i,j,99);
+                            showValue(i, j, 99);
                         }
                     }
                 }
