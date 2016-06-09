@@ -694,263 +694,190 @@ namespace New_Jarvis
             #endregion
 
             // (2) 사사 - 99점
-            for (i = 0; i < 15; i++)
-            {
-                for (int j = 0; j < 15; j++)
-                {
-                    black[i, j] = 1;
-                }
-            }
             #region 사사
-            while (true)
+            int count;
+            for (i = 0; i < 14; i++)
             {
-                found = false;
-                piece = "B";
-
-                // 모든 셀에 대하여 8방향 탐색 후 3줄짜리가 2개 이상이면 해당 셀은 사사 가치를 가진다.
-                for (i = 0; i < 15; i++)
+                for (int j = 0; j < 14; j++)
                 {
-                    for (int j = 0; j < 15; j++)
+                    if (isEmpty(i, j))
                     {
-                        if (black[i, j] == 1)
+                        count = 0;
+                        /***********4확인***************/
+                        //위아래
+                        if ((i > 3) && (i < 14))
                         {
-                            black[i, j] = 0;
-                            row = i;
-                            col = j;
-                            found = true;
-                            break;
+                            if (isBlack(i - 1, j) && isBlack(i - 2, j) && isBlack(i - 3, j))
+                            {
+                                if (isEmpty(i + 1, j) || isEmpty(i - 4, j))
+                                {
+                                    count++;
+                                }
+                            }
                         }
-                    }
-                    if (found)
-                    {
-                        break;
-                    }
-                }
-                if (!found)
-                {
-                    // end loop
-                    break;
-                }
-
-                if (piece == null)
-                {
-                    return -1;
-                }
-
-                // 8방향 탐색
-                cnt = 0;
-                totCnt = 0;
-                i = 1;
-                ret = null;
-                // (1) 오른쪽으로 탐색
-                if (row + 1 < 15)
-                {
-                    ret = adventureField(row + i, col);
-                    while (ret != null && cnt < 4)
-                    {
-                        if (String.Compare(ret, piece) == 0)
+                        if ((i > 2) && (i < 13))
                         {
-                            cnt += 1;
+                            if (isBlack(i + 1, j) && isBlack(i - 1, j) && isBlack(i - 2, j))
+                            {
+                                if (isEmpty(i + 2, j) || isEmpty(i - 3, j))
+                                {
+                                    count++;
+                                }
+                            }
                         }
-                        else
+                        if ((i > 1) && (i < 12))
                         {
-                            break;
+                            if (isBlack(i + 2, j) && isBlack(i + 1, j) && isBlack(i - 1, j))
+                            {
+                                if (isEmpty(i + 3, j) || isEmpty(i - 2, j))
+                                {
+                                    count++;
+                                }
+                            }
                         }
-                        i += 1;
-                        ret = adventureField(row + i, col);
-                    }
-                    if (cnt == 3)
-                    {
-                        totCnt += 1;
-                    }
-                }
-                // (2) 오른쪽 아래로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (row + 1 < 15 && col + 1 < 15)
-                {
-                    ret = adventureField(row + i, col + i);
-                    while (ret != null && cnt < 4)
-                    {
-                        if (String.Compare(ret, piece) == 0)
+                        if ((i > 0) && (i < 11))
                         {
-                            cnt += 1;
+                            if (isBlack(i + 1, j) && isBlack(i + 2, j) && isBlack(i + 3, j))
+                            {
+                                if (isEmpty(i + 4, j) || isEmpty(i - 1, j))
+                                {
+                                    count++;
+                                }
+                            }
                         }
-                        else
+                        //왼쪽오른쪽
+                        if ((j > 3) && (j < 14))
                         {
-                            break;
+                            if (isBlack(i, j - 1) && isBlack(i, j - 2) && isBlack(i, j - 3))
+                            {
+                                if (isEmpty(i, j + 1) || isEmpty(i, j - 4))
+                                {
+                                    count++;
+                                }
+                            }
                         }
-                        i += 1;
-                        ret = adventureField(row + i, col + i);
-                    }
-                    if (cnt == 3)
-                    {
-                        totCnt += 1;
-                    }
-                }
-
-                // (3) 아래로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (col + 1 < 15)
-                {
-                    ret = adventureField(row, col + i);
-                    while (ret != null && cnt < 4)
-                    {
-                        if (String.Compare(ret, piece) == 0)
+                        if ((j > 2) && (j < 13))
                         {
-                            cnt += 1;
+                            if (isBlack(i, j + 1) && isBlack(i, j - 1) && isBlack(i, j - 2))
+                            {
+                                if (isEmpty(i, j + 2) || isEmpty(i, j - 3))
+                                {
+                                    count++;
+                                }
+                            }
                         }
-                        else
+                        if ((j > 1) && (j < 12))
                         {
-                            break;
+                            if (isBlack(i, j + 2) && isBlack(i, j + 1) && isBlack(i, j - 1))
+                            {
+                                if (isEmpty(i, j + 3) || isEmpty(i, j - 2))
+                                {
+                                    count++;
+                                }
+                            }
                         }
-                        i += 1;
-                        ret = adventureField(row, col + i);
-                    }
-                    if (cnt == 3)
-                    {
-                        totCnt += 1;
-                    }
-                }
-
-                // (4) 왼쪽 아래로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (row - 1 >= 0 && col + 1 < 15)
-                {
-                    ret = adventureField(row - i, col + i);
-                    while (ret != null && cnt < 4)
-                    {
-                        if (String.Compare(ret, piece) == 0)
+                        if ((j > 0) && (j < 11))
                         {
-                            cnt += 1;
+                            if (isBlack(i, j + 1) && isBlack(i, j + 2) && isBlack(i, j + 3))
+                            {
+                                if (isEmpty(i, j + 4) || isEmpty(i, j - 1))
+                                {
+                                    count++;
+                                }
+                            }
                         }
-                        else
+                        //위오른쪽방향대각선
+                        if ((i > 3) && (i < 14) && (j < 11) && (j > 0))
                         {
-                            break;
+                            if (isBlack(i - 1, j + 1) && isBlack(i - 2, j + 2) && isBlack(i - 3, j + 3))
+                            {
+                                if (isEmpty(i + 1, j - 1) || isEmpty(i - 4, j + 4))
+                                {
+                                    count++;
+                                }
+                            }
                         }
-                        i += 1;
-                        ret = adventureField(row - i, col + i);
-                    }
-                    if (cnt == 3)
-                    {
-                        totCnt += 1;
-                    }
-                }
-
-                // (5) 왼쪽으로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (row - 1 >= 0)
-                {
-                    ret = adventureField(row - i, col);
-                    while (ret != null && cnt < 4)
-                    {
-                        if (String.Compare(ret, piece) == 0)
+                        if ((i > 2) && (i < 13) && (j < 12) && (j > 1))
                         {
-                            cnt += 1;
+                            if (isBlack(i - 1, j + 1) && isBlack(i - 2, j + 2) && isBlack(i + 1, j - 1))
+                            {
+                                if (isEmpty(i + 2, j - 2) || isEmpty(i - 3, j + 3))
+                                {
+                                    count++;
+                                }
+                            }
                         }
-                        else
+                        if ((i > 1) && (i < 12) && (j < 13) && (j > 2))
                         {
-                            break;
+                            if (isBlack(i - 1, j + 1) && isBlack(i + 1, j - 1) && isBlack(i + 2, j - 2))
+                            {
+                                if (isEmpty(i + 3, j - 3) || isEmpty(i - 2, j + 2))
+                                {
+                                    count++;
+                                }
+                            }
                         }
-                        i += 1;
-                        ret = adventureField(row - i, col);
-                    }
-                    if (cnt == 3)
-                    {
-                        totCnt += 1;
-                    }
-                }
-
-                // (6) 왼쪽 위로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (row - 1 >= 0 && col - 1 >= 0)
-                {
-                    ret = adventureField(row - i, col - i);
-                    while (ret != null && cnt < 4)
-                    {
-                        if (String.Compare(ret, piece) == 0)
+                        if ((i > 0) && (i < 11) && (j < 14) && (j > 3))
                         {
-                            cnt += 1;
+                            if (isBlack(i + 1, j - 1) && isBlack(i + 2, j - 2) && isBlack(i + 3, j - 3))
+                            {
+                                if (isEmpty(i + 4, j - 4) || isEmpty(i - 1, j + 1))
+                                {
+                                    count++;
+                                }
+                            }
                         }
-                        else
+                        //위왼쪽방향대각선
+                        if ((i > 3) && (i < 14) && (j > 3) && (j < 14))
                         {
-                            break;
+                            if (isBlack(i - 1, j - 1) && isBlack(i - 2, j - 2) && isBlack(i - 3, j - 3))
+                            {
+                                if (isEmpty(i + 1, j + 1) || isEmpty(i - 4, j - 4))
+                                {
+                                    count++;
+                                }
+                            }
                         }
-                        i += 1;
-                        ret = adventureField(row - i, col - i);
-                    }
-                    if (cnt == 3)
-                    {
-                        totCnt += 1;
-                    }
-                }
-
-                // (7) 위로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (col - 1 >= 0)
-                {
-                    ret = adventureField(row, col - i);
-                    while (ret != null && cnt < 4)
-                    {
-                        if (String.Compare(ret, piece) == 0)
+                        if ((i > 2) && (i < 13) && (j > 2) && (j < 13))
                         {
-                            cnt += 1;
+                            if (isBlack(i - 1, j - 1) && isBlack(i - 2, j - 2) && isBlack(i + 1, j + 1))
+                            {
+                                if (isEmpty(i + 2, j + 2) || isEmpty(i - 3, j - 3))
+                                {
+                                    count++;
+                                }
+                            }
                         }
-                        else
+                        if ((i > 1) && (i < 12) && (j > 1) && (j < 12))
                         {
-                            break;
+                            if (isBlack(i - 1, j - 1) && isBlack(i + 1, j + 1) && isBlack(i + 2, j + 2))
+                            {
+                                if (isEmpty(i + 3, j + 3) || isEmpty(i - 2, j - 2))
+                                {
+                                    count++;
+                                }
+                            }
                         }
-                        i += 1;
-                        ret = adventureField(row, col - i);
-                    }
-                    if (cnt == 3)
-                    {
-                        totCnt += 1;
-                    }
-                }
-
-                // (8) 오른쪽 위로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (row + 1 < 15 && col - 1 >= 0)
-                {
-                    ret = adventureField(row + i, col - i);
-                    while (ret != null && cnt < 4)
-                    {
-                        if (String.Compare(ret, piece) == 0)
+                        if ((i > 0) && (i < 11) && (j > 0) && (j < 11))
                         {
-                            cnt += 1;
+                            if (isBlack(i + 1, j + 1) && isBlack(i + 2, j + 2) && isBlack(i + 3, j + 3))
+                            {
+                                if (isEmpty(i + 4, j + 4) || isEmpty(i - 1, j - 1))
+                                {
+                                    count++;
+                                }
+                            }
                         }
-                        else
+                        /*******************************************************/
+                        //만약 2줄이상이 해당되면 사사
+                        if (count > 1)
                         {
-                            break;
+                            if (adv[i, j] == 0)
+                            {
+                                adv[i, j] = 1;
+                                showValue(i, j, 99);
+                            }
                         }
-                        i += 1;
-                        ret = adventureField(row + i, col - i);
-                    }
-                    if (cnt == 3)
-                    {
-                        totCnt += 1;
-                    }
-                }
-                if (totCnt > 1)
-                {
-                    if (adv[row, col] == 0)
-                    {
-                        adv[row, col] = 1;
-                        showValue(row, col, 99);
                     }
                 }
             }
@@ -1188,6 +1115,250 @@ namespace New_Jarvis
             }
             #endregion
 
+            // (9) 상대편의 방어가 없는 삼삼 - 96점
+            #region 방어 없는 삼삼
+            for (i = 0; i < 15; i++)
+            {
+                for (int j = 0; j < 15; j++)
+                {
+                    if (isEmpty(i, j))
+                    {
+                        int blocked = 0, nonblocked = 0;
+                        /*****************3개되는 줄찾기*****************************/
+                        //위아래
+                        if ((i > 2) && (i < 14))
+                        {
+                            if (isBlack(i - 1, j) && isBlack(i - 2, j))
+                            {
+                                if (isEmpty(i + 1, j) && isEmpty(i - 3, j))
+                                {
+                                    nonblocked++;
+                                }
+                                else if (isWhite(i + 1, j) && isEmpty(i - 3, j))
+                                {
+                                    blocked++;
+                                }
+                                else if (isEmpty(i + 1, j) && isWhite(i - 3, j))
+                                {
+                                    blocked++;
+                                }
+                            }
+                        }
+                        if ((i > 1) && (i < 13))
+                        {
+                            if (isBlack(i + 1, j) && isBlack(i - 1, j))
+                            {
+                                if (isEmpty(i + 2, j) && isEmpty(i - 2, j))
+                                {
+                                    nonblocked++;
+                                }
+                                else if (isWhite(i + 2, j) && isEmpty(i - 2, j))
+                                {
+                                    blocked++;
+                                }
+                                else if (isEmpty(i + 2, j) && isWhite(i - 2, j))
+                                {
+                                    blocked++;
+                                }
+                            }
+                        }
+                        if ((i > 0) && (i < 12))
+                        {
+                            if (isBlack(i + 2, j) && isBlack(i + 1, j))
+                            {
+                                if (isEmpty(i + 3, j) && isEmpty(i - 1, j))
+                                {
+                                    nonblocked++;
+                                }
+                                else if (isWhite(i + 3, j) && isEmpty(i - 1, j))
+                                {
+                                    blocked++;
+                                }
+                                else if (isEmpty(i + 3, j) && isWhite(i - 1, j))
+                                {
+                                    blocked++;
+                                }
+                            }
+                        }
+                        //왼쪽오른쪽
+                        if ((j > 2) && (j < 14))
+                        {
+                            if (isBlack(i, j - 1) && isBlack(i, j - 2))
+                            {
+                                if (isEmpty(i, j + 1) && isEmpty(i, j - 3))
+                                {
+                                    nonblocked++;
+                                }
+                                else if (isWhite(i, j + 1) && isEmpty(i, j - 3))
+                                {
+                                    blocked++;
+                                }
+                                else if (isEmpty(i, j + 1) && isWhite(i, j - 3))
+                                {
+                                    blocked++;
+                                }
+                            }
+                        }
+                        if ((j > 1) && (j < 13))
+                        {
+                            if (isBlack(i, j + 1) && isBlack(i, j - 1))
+                            {
+                                if (isEmpty(i, j + 2) && isEmpty(i, j - 2))
+                                {
+                                    nonblocked++;
+                                }
+                                else if (isWhite(i, j + 2) && isEmpty(i, j - 2))
+                                {
+                                    blocked++;
+                                }
+                                else if (isEmpty(i, j + 2) && isWhite(i, j - 2))
+                                {
+                                    blocked++;
+                                };
+                            }
+                        }
+                        if ((j > 0) && (j < 12))
+                        {
+                            if (isBlack(i, j + 2) && isBlack(i, j + 1))
+                            {
+                                if (isEmpty(i, j + 3) && isEmpty(i, j - 1))
+                                {
+                                    nonblocked++;
+                                }
+                                else if (isWhite(i, j + 3) && isEmpty(i, j - 1))
+                                {
+                                    blocked++;
+                                }
+                                else if (isEmpty(i, j + 3) && isWhite(i, j - 1))
+                                {
+                                    blocked++;
+                                }
+                            }
+                        }
+                        //위오른쪽방향대각선
+                        if ((i > 2) && (i < 14) && (j < 12) && (j > 0))
+                        {
+                            if (isBlack(i - 1, j + 1) && isBlack(i - 2, j + 2))
+                            {
+                                if (isEmpty(i + 1, j - 1) && isEmpty(i - 3, j + 3))
+                                {
+                                    nonblocked++;
+                                }
+                                else if (isWhite(i + 1, j - 1) && isEmpty(i - 3, j + 3))
+                                {
+                                    blocked++;
+                                }
+                                else if (isEmpty(i + 1, j - 1) && isWhite(i - 3, j + 3))
+                                {
+                                    blocked++;
+                                }
+                            }
+                        }
+                        if ((i > 1) && (i < 13) && (j < 13) && (j > 1))
+                        {
+                            if (isBlack(i - 1, j + 1) && isBlack(i + 1, j - 1))
+                            {
+                                if (isEmpty(i + 2, j - 2) && isEmpty(i - 2, j + 2))
+                                {
+                                    nonblocked++;
+                                }
+                                else if (isWhite(i + 2, j - 2) && isEmpty(i - 2, j + 2))
+                                {
+                                    blocked++;
+                                }
+                                else if (isEmpty(i + 2, j - 2) && isWhite(i - 2, j + 2))
+                                {
+                                    blocked++;
+                                }
+                            }
+                        }
+                        if ((i > 0) && (i < 12) && (j < 14) && (j > 2))
+                        {
+                            if (isBlack(i + 1, j - 1) && isBlack(i + 2, j - 2))
+                            {
+                                if (isEmpty(i + 3, j - 3) && isEmpty(i - 1, j + 1))
+                                {
+                                    nonblocked++;
+                                }
+                                else if (isWhite(i + 3, j - 3) && isEmpty(i - 1, j + 1))
+                                {
+                                    blocked++;
+                                }
+                                else if (isEmpty(i + 3, j - 3) && isWhite(i - 1, j + 1))
+                                {
+                                    blocked++;
+                                }
+                            }
+                        }
+                        //위왼쪽방향대각선
+                        if ((i > 2) && (i < 14) && (j > 2) && (j < 14))
+                        {
+                            if (isBlack(i - 1, j - 1) && isBlack(i - 2, j - 2))
+                            {
+                                if (isEmpty(i + 1, j + 1) && isEmpty(i - 3, j - 3))
+                                {
+                                    nonblocked++;
+                                }
+                                else if (isWhite(i + 1, j + 1) && isEmpty(i - 3, j - 3))
+                                {
+                                    blocked++;
+                                }
+                                else if (isEmpty(i + 1, j + 1) && isWhite(i - 3, j - 3))
+                                {
+                                    blocked++;
+                                }
+                            }
+                        }
+                        if ((i > 1) && (i < 13) && (j > 1) && (j < 13))
+                        {
+                            if (isBlack(i - 1, j - 1) && isBlack(i + 1, j + 1))
+                            {
+                                if (isEmpty(i + 2, j + 2) && isEmpty(i - 2, j - 2))
+                                {
+                                    nonblocked++;
+                                }
+                                else if (isWhite(i + 2, j + 2) && isEmpty(i - 2, j - 2))
+                                {
+                                    blocked++;
+                                }
+                                else if (isEmpty(i + 2, j + 2) && isWhite(i - 2, j - 2))
+                                {
+                                    blocked++;
+                                }
+                            }
+                        }
+                        if ((i > 0) && (i < 12) && (j > 0) && (j < 12))
+                        {
+                            if (isBlack(i + 1, j + 1) && isBlack(i + 2, j + 2))
+                            {
+                                if (isEmpty(i + 3, j + 3) && isEmpty(i - 1, j - 1))
+                                {
+                                    nonblocked++;
+                                }
+                                else if (isWhite(i + 3, j + 3) && isEmpty(i - 1, j - 1))
+                                {
+                                    blocked++;
+                                }
+                                else if (isEmpty(i + 3, j + 3) && isWhite(i - 1, j - 1))
+                                {
+                                    blocked++;
+                                }
+                            }
+                        }
+                        /*******************************************************/
+                        if (nonblocked > 1)
+                        {
+                            if (adv[i, j] == 0)
+                            {
+                                adv[i, j] = 1;
+                                showValue(i, j, 96);
+                            }
+                        }
+                    }
+                }
+            }
+            #endregion
+            
             // (4) 상대편의 방어가 있는 사삼 - 70점
             makeBlack();
             #region 방어 있는 사삼
@@ -2230,269 +2401,6 @@ namespace New_Jarvis
             }
             #endregion
 
-            // (9) 상대편의 방어가 없는 삼삼 - 96점
-            for (i = 0; i < 15; i++)
-            {
-                for (int j = 0; j < 15; j++)
-                {
-                    black[i, j] = 1;
-                }
-            }
-            #region 방어 없는 삼삼
-            while (true)
-            {
-                found = false;
-                piece = "B";
-
-                // 모든 셀에 대하여 8방향 탐색 후 2줄짜리가 2개 이상이면 해당 셀은 삼삼 가치를 가진다.
-                for (i = 0; i < 15; i++)
-                {
-                    for (int j = 0; j < 15; j++)
-                    {
-                        if (black[i, j] == 1)
-                        {
-                            black[i, j] = 0;
-                            row = i;
-                            col = j;
-                            found = true;
-                            break;
-                        }
-                    }
-                    if (found)
-                    {
-                        break;
-                    }
-                }
-                if (!found)
-                {
-                    // end loop
-                    break;
-                }
-
-                if (piece == null)
-                {
-                    return -1;
-                }
-
-                // 8방향 탐색
-                cnt = 0;
-                totCnt = 0;
-                i = 1;
-                ret = null;
-                // (1) 오른쪽으로 탐색
-                if (row + 1 < 15)
-                {
-                    ret = adventureField(row + i, col);
-                    while (ret != null && cnt < 3)
-                    {
-                        if (String.Compare(ret, piece) == 0)
-                        {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row + i, col);
-                    }
-                    if (cnt == 2)
-                    {
-                        totCnt += 1;
-                    }
-                }
-                // (2) 오른쪽 아래로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (row + 1 < 15 && col + 1 < 15)
-                {
-                    ret = adventureField(row + i, col + i);
-                    while (ret != null && cnt < 3)
-                    {
-                        if (String.Compare(ret, piece) == 0)
-                        {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row + i, col + i);
-                    }
-                    if (cnt == 2)
-                    {
-                        totCnt += 1;
-                    }
-                }
-
-                // (3) 아래로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (col + 1 < 15)
-                {
-                    ret = adventureField(row, col + i);
-                    while (ret != null && cnt < 3)
-                    {
-                        if (String.Compare(ret, piece) == 0)
-                        {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row, col + i);
-                    }
-                    if (cnt == 2)
-                    {
-                        totCnt += 1;
-                    }
-                }
-
-                // (4) 왼쪽 아래로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (row - 1 >= 0 && col + 1 < 15)
-                {
-                    ret = adventureField(row - i, col + i);
-                    while (ret != null && cnt < 3)
-                    {
-                        if (String.Compare(ret, piece) == 0)
-                        {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row - i, col + i);
-                    }
-                    if (cnt == 2)
-                    {
-                        totCnt += 1;
-                    }
-                }
-
-                // (5) 왼쪽으로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (row - 1 >= 0)
-                {
-                    ret = adventureField(row - i, col);
-                    while (ret != null && cnt < 3)
-                    {
-                        if (String.Compare(ret, piece) == 0)
-                        {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row - i, col);
-                    }
-                    if (cnt == 2)
-                    {
-                        totCnt += 1;
-                    }
-                }
-
-                // (6) 왼쪽 위로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (row - 1 >= 0 && col - 1 >= 0)
-                {
-                    ret = adventureField(row - i, col - i);
-                    while (ret != null && cnt < 3)
-                    {
-                        if (String.Compare(ret, piece) == 0)
-                        {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row - i, col - i);
-                    }
-                    if (cnt == 2)
-                    {
-                        totCnt += 1;
-                    }
-                }
-
-                // (7) 위로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (col - 1 >= 0)
-                {
-                    ret = adventureField(row, col - i);
-                    while (ret != null && cnt < 3)
-                    {
-                        if (String.Compare(ret, piece) == 0)
-                        {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row, col - i);
-                    }
-                    if (cnt == 2)
-                    {
-                        totCnt += 1;
-                    }
-                }
-
-                // (8) 오른쪽 위로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (row + 1 < 15 && col - 1 >= 0)
-                {
-                    ret = adventureField(row + i, col - i);
-                    while (ret != null && cnt < 3)
-                    {
-                        if (String.Compare(ret, piece) == 0)
-                        {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row + i, col - i);
-                    }
-                    if (cnt == 2)
-                    {
-                        totCnt += 1;
-                    }
-                }
-                if (totCnt > 1)
-                {
-                    if (adv[row, col] == 0)
-                    {
-                        adv[row, col] = 1;
-                        showValue(row, col, 96);
-                    }
-                }
-            }
-            #endregion
-            
             // (7) 한쪽에 상대편의 방어가 있고 중간에 하나의 빈칸이 있는 사목 - 32점
             makeBlack();
             #region 방어 있고 중간에 하나의 빈칸이 있는 사목
@@ -3679,397 +3587,135 @@ namespace New_Jarvis
             // (5) 상대편의 방어가 없는 사목 - 97점
             makeBlack();
             #region 방어 없는 사목
-            while (true)
+            for (i = 0; i < 15; i++)
             {
-                found = false;
-
-                // 돌 3개 이어진거 찾으면 끝.
-                for (i = 0; i < 15; i++)
+                for (int j = 0; j < 15; j++)
                 {
-                    for (int j = 0; j < 15; j++)
+                    if (isEmpty(i, j))
                     {
-                        if (black[i, j] == 1)
+                        int check = 0;
+                        //위아래
+                        if ((i > 3) && (i < 14))
                         {
-                            black[i, j] = 0;
-                            field[i, j].Selected = true;
-                            piece = field[i, j].Value.ToString();
-                            row = i;
-                            col = j;
-                            found = true;
-                            break;
-                        }
-                    }
-                    if (found)
-                    {
-                        break;
-                    }
-                }
-                if (!found)
-                {
-                    // end loop
-                    break;
-                }
-
-                if (piece == null)
-                {
-                    return -1;
-                }
-
-                // 8방향 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                // (1) 오른쪽으로 탐색
-                if (row + 1 < 15)
-                {
-                    ret = adventureField(row + i, col);
-                    if (ret != null)
-                    {
-                        cnt += 1;
-                    }
-                    while (ret != null && cnt < 4)
-                    {
-                        if (String.Compare(ret, piece) == 0)
-                        {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row + i, col);
-                    }
-                    if (cnt == 3)
-                    {
-                        if (row - 1 >= 0)
-                        {
-                            if (adv[row - 1, col] == 0)
+                            if (isEmpty(i + 1, j) && isBlack(i - 1, j) && isBlack(i - 2, j) && isBlack(i - 3, j) && isEmpty(i - 4, j))
                             {
-                                showValue(row - 1, col, 97);
-                                adv[row - 1, col] = 1;
+                                check = 1;
                             }
                         }
-                        if (row + i < 15)
+                        if ((i > 2) && (i < 13))
                         {
-                            if (adv[row + i, col] == 0)
+                            if (isEmpty(i + 2, j) && isBlack(i + 1, j) && isBlack(i - 1, j) && isBlack(i - 2, j) && isEmpty(i - 3, j))
                             {
-                                showValue(row + i, col, 97);
-                                adv[row + i, col] = 1;
+                                check = 1;
                             }
                         }
-                    }
-                }
-                // (2) 오른쪽 아래로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (row + 1 < 15 && col + 1 < 15)
-                {
-                    ret = adventureField(row + i, col + i);
-                    if (ret != null)
-                    {
-                        cnt += 1;
-                    }
-                    while (ret != null && cnt < 4)
-                    {
-                        if (String.Compare(ret, piece) == 0)
+                        if ((i > 1) && (i < 12))
                         {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row + i, col + i);
-                    }
-                    if (cnt == 3)
-                    {
-                        if (row - 1 >= 0 && col - 1 >= 0)
-                        {
-                            if (adv[row - 1, col - 1] == 0)
+                            if (isEmpty(i + 3, j) && isBlack(i + 2, j) && isBlack(i + 1, j) && isBlack(i - 1, j) && isEmpty(i - 2, j))
                             {
-                                showValue(row - 1, col - 1, 97);
-                                adv[row - 1, col - 1] = 1;
+                                check = 1;
                             }
                         }
-                        if (row + i < 15 && col + i < 15)
+                        if ((i > 0) && (i < 11))
                         {
-                            if (adv[row + i, col + i] == 0)
+                            if (isEmpty(i - 1, j) && isBlack(i + 1, j) && isBlack(i + 2, j) && isBlack(i + 3, j) && isEmpty(i + 4, j))
                             {
-                                showValue(row + i, col + i, 97);
-                                adv[row + i, col + i] = 1;
+                                check = 1;
                             }
                         }
-                    }
-                }
-
-                // (3) 아래로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (col + 1 < 15)
-                {
-                    ret = adventureField(row, col + i);
-                    if (ret != null)
-                    {
-                        cnt += 1;
-                    }
-                    while (ret != null && cnt < 4)
-                    {
-                        if (String.Compare(ret, piece) == 0)
+                        //왼쪽오른쪽
+                        if ((j > 3) && (j < 14))
                         {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row, col + i);
-                    }
-                    if (cnt == 3)
-                    {
-                        if (col - 1 >= 0)
-                        {
-                            if (adv[row, col - 1] == 0)
+                            if (isEmpty(i, j + 1) && isBlack(i, j - 1) && isBlack(i, j - 2) && isBlack(i, j - 3) && isEmpty(i, j - 4))
                             {
-                                showValue(row, col - 1, 97);
-                                adv[row, col - 1] = 1;
+                                check = 1;
                             }
                         }
-                        if (col + i < 15)
+                        if ((j > 2) && (j < 13))
                         {
-                            if (adv[row, col + i] == 0)
+                            if (isEmpty(i, j + 2) && isBlack(i, j + 1) && isBlack(i, j - 1) && isBlack(i, j - 2) && isEmpty(i, j - 3))
                             {
-                                showValue(row, col + i, 97);
-                                adv[row, col + i] = 1;
+                                check = 1;
                             }
                         }
-                    }
-                }
-
-                // (4) 왼쪽 아래로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (row - 1 >= 0 && col + 1 < 15)
-                {
-                    ret = adventureField(row - i, col + i);
-                    if (ret != null)
-                    {
-                        cnt += 1;
-                    }
-                    while (ret != null && cnt < 4)
-                    {
-                        if (String.Compare(ret, piece) == 0)
+                        if ((j > 1) && (j < 12))
                         {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row - i, col + i);
-                    }
-                    if (cnt == 3)
-                    {
-                        if (row + 1 < 15 && col - 1 >= 0)
-                        {
-                            if (adv[row + 1, col - 1] == 0)
+                            if (isEmpty(i, j + 3) && isBlack(i, j + 2) && isBlack(i, j + 1) && isBlack(i, j - 1) && isEmpty(i, j - 2))
                             {
-                                showValue(row + 1, col - 1, 97);
-                                adv[row + 1, col - 1] = 1;
+                                check = 1;
                             }
                         }
-                        if (row - i >= 0 && col + i < 15)
+                        if ((j > 0) && (j < 11))
                         {
-                            if (adv[row - i, col + i] == 0)
+                            if (isEmpty(i, j - 1) && isBlack(i, j + 1) && isBlack(i, j + 2) && isBlack(i, j + 3) && isEmpty(i, j + 4))
                             {
-                                showValue(row - i, col + i, 97);
-                                adv[row - i, col + i] = 1;
+                                check = 1;
                             }
                         }
-                    }
-                }
-
-                // (5) 왼쪽으로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (row - 1 >= 0)
-                {
-                    ret = adventureField(row - i, col);
-                    if (ret != null)
-                    {
-                        cnt += 1;
-                    }
-                    while (ret != null && cnt < 4)
-                    {
-                        if (String.Compare(ret, piece) == 0)
+                        //위오른쪽방향대각선
+                        if ((i > 3) && (i < 14) && (j < 11) && (j > 0))
                         {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row - i, col);
-                    }
-                    if (cnt == 3)
-                    {
-                        if (row + 1 < 15)
-                        {
-                            if (adv[row + 1, col] == 0)
+                            if (isEmpty(i + 1, j - 1) && isBlack(i - 1, j + 1) && isBlack(i - 2, j + 2) && isBlack(i - 3, j + 3) && isEmpty(i - 4, j + 4))
                             {
-                                showValue(row + 1, col, 97);
-                                adv[row + 1, col] = 1;
+                                check = 1;
                             }
                         }
-                        if (row - i >= 0)
+                        if ((i > 2) && (i < 13) && (j < 12) && (j > 1))
                         {
-                            if (adv[row - i, col] == 0)
+                            if (isEmpty(i - 3, j + 3) && isBlack(i - 1, j + 1) && isBlack(i - 2, j + 2) && isBlack(i + 1, j - 1) && isEmpty(i + 2, j - 2))
                             {
-                                showValue(row - i, col, 97);
-                                adv[row - i, col] = 1;
+                                check = 1;
                             }
                         }
-                    }
-                }
-
-                // (6) 왼쪽 위로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (row - 1 >= 0 && col - 1 >= 0)
-                {
-                    ret = adventureField(row - i, col - i);
-                    if (ret != null)
-                    {
-                        cnt += 1;
-                    }
-                    while (ret != null && cnt < 4)
-                    {
-                        if (String.Compare(ret, piece) == 0)
+                        if ((i > 1) && (i < 12) && (j < 13) && (j > 2))
                         {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row - i, col - i);
-                    }
-                    if (cnt == 3)
-                    {
-                        if (row + 1 < 15 && col + 1 < 15)
-                        {
-                            if (adv[row + 1, col + 1] == 0)
+                            if (isEmpty(i - 2, j + 2) && isBlack(i - 1, j + 1) && isBlack(i + 1, j - 1) && isBlack(i + 2, j - 2) && isEmpty(i + 3, j - 3))
                             {
-                                showValue(row + 1, col + 1, 97);
-                                adv[row + 1, col + 1] = 1;
+                                check = 1;
                             }
                         }
-                        if (row - i >= 0 && col - i >= 0)
+                        if ((i > 0) && (i < 11) && (j < 14) && (j > 3))
                         {
-                            if (adv[row - i, col - i] == 0)
+                            if (isEmpty(i - 1, j + 1) && isBlack(i + 1, j - 1) && isBlack(i + 2, j - 2) && isBlack(i + 3, j - 3) && isEmpty(i + 4, j - 4))
                             {
-                                showValue(row - i, col - i, 97);
-                                adv[row - i, col - i] = 1;
+                                check = 1;
                             }
                         }
-                    }
-                }
-
-                // (7) 위로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (col - 1 >= 0)
-                {
-                    ret = adventureField(row, col - i);
-                    if (ret != null)
-                    {
-                        cnt += 1;
-                    }
-                    while (ret != null && cnt < 4)
-                    {
-                        if (String.Compare(ret, piece) == 0)
+                        //위왼쪽방향대각선
+                        if ((i > 3) && (i < 14) && (j > 3) && (j < 14))
                         {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row, col - i);
-                    }
-                    if (cnt == 3)
-                    {
-                        if (col + 1 < 15)
-                        {
-                            if (adv[row, col + 1] == 0)
+                            if (isEmpty(i + 1, j + 1) && isBlack(i - 1, j - 1) && isBlack(i - 2, j - 2) && isBlack(i - 3, j - 3) && isEmpty(i - 4, j - 4))
                             {
-                                showValue(row, col + 1, 97);
-                                adv[row, col + 1] = 1;
+                                check = 1;
                             }
                         }
-                        if (col - i >= 0)
+                        if ((i > 2) && (i < 13) && (j > 2) && (j < 13))
                         {
-                            if (adv[row, col - i] == 0)
+                            if (isEmpty(i - 3, j - 3) && isBlack(i - 1, j - 1) && isBlack(i - 2, j - 2) && isBlack(i + 1, j + 1) && isEmpty(i + 2, j + 2))
                             {
-                                showValue(row, col - i, 97);
-                                adv[row, col - i] = 1;
+                                check = 1;
                             }
                         }
-                    }
-                }
-
-                // (8) 오른쪽 위로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (row + 1 < 15 && col - 1 >= 0)
-                {
-                    ret = adventureField(row + i, col - i);
-                    if (ret != null)
-                    {
-                        cnt += 1;
-                    }
-                    while (ret != null && cnt < 4)
-                    {
-                        if (String.Compare(ret, piece) == 0)
+                        if ((i > 1) && (i < 12) && (j > 1) && (j < 12))
                         {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row + i, col - i);
-                    }
-                    if (cnt == 3)
-                    {
-                        if (row - 1 >= 0 && col + 1 < 15)
-                        {
-                            if (adv[row - 1, col + 1] == 0)
+                            if (isEmpty(i - 2, j - 2) && isBlack(i - 1, j - 1) && isBlack(i + 1, j + 1) && isBlack(i + 2, j + 2) && isEmpty(i + 3, j + 3))
                             {
-                                showValue(row - 1, col + 1, 97);
-                                adv[row - 1, col + 1] = 1;
+                                check = 1;
                             }
                         }
-                        if (row + i < 15 && col - i >= 0)
+                        if ((i > 0) && (i < 11) && (j > 0) && (j < 11))
                         {
-                            if (adv[row + i, col - i] == 0)
+                            if (isEmpty(i - 1, j - 1) && isBlack(i + 1, j + 1) && isBlack(i + 2, j + 2) && isBlack(i + 3, j + 3) && isEmpty(i + 4, j + 4))
                             {
-                                showValue(row + i, col - i, 97);
-                                adv[row + i, col - i] = 1;
+                                check = 1;
+                            }
+                        }
+                        if (check == 1)
+                        {
+                            if (adv[i, j] == 0)
+                            {
+                                adv[i, j] = 1;
+                                showValue(i, j, 97);
                             }
                         }
                     }
@@ -4135,7 +3781,7 @@ namespace New_Jarvis
                         //위오른쪽방향대각선
                         if ((i > 2) && (i < 14) && (j < 12) && (j > 0))
                         {
-                            if (isEmpty(i + 1, j - 1) == null && isBlack(i - 1, j + 1) && isBlack(i - 2, j + 2) && isEmpty(i - 3, j + 3))
+                            if (isEmpty(i + 1, j - 1) && isBlack(i - 1, j + 1) && isBlack(i - 2, j + 2) && isEmpty(i - 3, j + 3))
                             {
                                 x = 1;
                             }
@@ -4261,7 +3907,7 @@ namespace New_Jarvis
                 {
                     if (isEmpty(i, j))
                     {
-                        int count = 0;
+                        count = 0;
                         /********************2개되는 줄의 유무***********/
                         //위아래
                         if ((i > 1) && (i < 14))
@@ -4340,397 +3986,107 @@ namespace New_Jarvis
             // (12) 방어 없는 삼목 - 10점
             makeBlack();
             #region 방어 없는 삼목
-            while (true)
+            for (i = 0; i < 15; i++)
             {
-                found = false;
-
-                // 돌 2개 이어진거 찾으면 끝.
-                for (i = 0; i < 15; i++)
+                for (int j = 0; j < 15; j++)
                 {
-                    for (int j = 0; j < 15; j++)
+                    if (isEmpty(i, j))
                     {
-                        if (black[i, j] == 1)
+                        int check = 0;
+                        //위아래
+                        if ((i > 2) && (i < 14))
                         {
-                            black[i, j] = 0;
-                            field[i, j].Selected = true;
-                            piece = field[i, j].Value.ToString();
-                            row = i;
-                            col = j;
-                            found = true;
-                            break;
-                        }
-                    }
-                    if (found)
-                    {
-                        break;
-                    }
-                }
-                if (!found)
-                {
-                    // end loop
-                    break;
-                }
-
-                if (piece == null)
-                {
-                    return -1;
-                }
-
-                // 8방향 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                // (1) 오른쪽으로 탐색
-                if (row + 1 < 15)
-                {
-                    ret = adventureField(row + i, col);
-                    if (ret != null)
-                    {
-                        cnt += 1;
-                    }
-                    while (ret != null && cnt < 3)
-                    {
-                        if (String.Compare(ret, piece) == 0)
-                        {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row + i, col);
-                    }
-                    if (cnt == 2)
-                    {
-                        if (row - 1 >= 0)
-                        {
-                            if (adv[row - 1, col] == 0)
+                            if (isEmpty(i + 1, j) && isBlack(i - 1, j) && isBlack(i - 2, j) && isEmpty(i - 3, j))
                             {
-                                showValue(row - 1, col, 10);
-                                adv[row - 1, col] = 1;
+                                check = 1;
                             }
                         }
-                        if (row + i < 15)
+                        if ((i > 1) && (i < 13))
                         {
-                            if (adv[row + i, col] == 0)
+                            if (isEmpty(i + 2, j) && isBlack(i + 1, j) && isBlack(i - 1, j) && isEmpty(i - 2, j))
                             {
-                                showValue(row + i, col, 10);
-                                adv[row + i, col] = 1;
+                                check = 1;
                             }
                         }
-                    }
-                }
-                // (2) 오른쪽 아래로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (row + 1 < 15 && col + 1 < 15)
-                {
-                    ret = adventureField(row + i, col + i);
-                    if (ret != null)
-                    {
-                        cnt += 1;
-                    }
-                    while (ret != null && cnt < 3)
-                    {
-                        if (String.Compare(ret, piece) == 0)
+                        if ((i > 0) && (i < 12))
                         {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row + i, col + i);
-                    }
-                    if (cnt == 2)
-                    {
-                        if (row - 1 >= 0 && col - 1 >= 0)
-                        {
-                            if (adv[row - 1, col - 1] == 0)
+                            if (isEmpty(i + 3, j) && isBlack(i + 2, j) && isBlack(i + 1, j) && isEmpty(i - 1, j))
                             {
-                                showValue(row - 1, col - 1, 10);
-                                adv[row - 1, col - 1] = 1;
+                                check = 1;
                             }
                         }
-                        if (row + i < 15 && col + i < 15)
+                        //왼쪽오른쪽
+                        if ((j > 2) && (j < 14))
                         {
-                            if (adv[row + i, col + i] == 0)
+                            if (isEmpty(i, j + 1) && isBlack(i, j - 1) && isBlack(i, j - 2) && isEmpty(i, j - 3))
                             {
-                                showValue(row + i, col + i, 10);
-                                adv[row + i, col + i] = 1;
+                                check = 1;
                             }
                         }
-                    }
-                }
-
-                // (3) 아래로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (col + 1 < 15)
-                {
-                    ret = adventureField(row, col + i);
-                    if (ret != null)
-                    {
-                        cnt += 1;
-                    }
-                    while (ret != null && cnt < 3)
-                    {
-                        if (String.Compare(ret, piece) == 0)
+                        if ((j > 1) && (j < 13))
                         {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row, col + i);
-                    }
-                    if (cnt == 2)
-                    {
-                        if (col - 1 >= 0)
-                        {
-                            if (adv[row, col - 1] == 0)
+                            if (isEmpty(i, j + 2) && isBlack(i, j + 1) && isBlack(i, j - 1) && isEmpty(i, j - 2))
                             {
-                                showValue(row, col - 1, 10);
-                                adv[row, col - 1] = 1;
+                                check = 1;
                             }
                         }
-                        if (col + i < 15)
+                        if ((j > 0) && (j < 12))
                         {
-                            if (adv[row, col + i] == 0)
+                            if (isEmpty(i, j + 3) && isBlack(i, j + 2) && isBlack(i, j + 1) && isEmpty(i, j - 1))
                             {
-                                showValue(row, col + i, 10);
-                                adv[row, col + i] = 1;
+                                check = 1;
                             }
                         }
-                    }
-                }
-
-                // (4) 왼쪽 아래로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (row - 1 >= 0 && col + 1 < 15)
-                {
-                    ret = adventureField(row - i, col + i);
-                    if (ret != null)
-                    {
-                        cnt += 1;
-                    }
-                    while (ret != null && cnt < 3)
-                    {
-                        if (String.Compare(ret, piece) == 0)
+                        //위오른쪽방향대각선
+                        if ((i > 2) && (i < 14) && (j < 12) && (j > 0))
                         {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row - i, col + i);
-                    }
-                    if (cnt == 2)
-                    {
-                        if (row + 1 < 15 && col - 1 >= 0)
-                        {
-                            if (adv[row + 1, col - 1] == 0)
+                            if (isEmpty(i + 1, j - 1) && isBlack(i - 1, j + 1) && isBlack(i - 2, j + 2) && isEmpty(i - 3, j + 3))
                             {
-                                showValue(row + 1, col - 1, 10);
-                                adv[row + 1, col - 1] = 1;
+                                check = 1;
                             }
                         }
-                        if (row - i >= 0 && col + i < 15)
+                        if ((i > 1) && (i < 13) && (j < 13) && (j > 1))
                         {
-                            if (adv[row - i, col + i] == 0)
+                            if (isEmpty(i + 2, j - 2) && isBlack(i + 1, j - 1) && isBlack(i - 1, j + 1) && isEmpty(i - 2, j + 2))
                             {
-                                showValue(row - i, col + i, 10);
-                                adv[row - i, col + i] = 1;
+                                check = 1;
                             }
                         }
-                    }
-                }
-
-                // (5) 왼쪽으로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (row - 1 >= 0)
-                {
-                    ret = adventureField(row - i, col);
-                    if (ret != null)
-                    {
-                        cnt += 1;
-                    }
-                    while (ret != null && cnt < 3)
-                    {
-                        if (String.Compare(ret, piece) == 0)
+                        if ((i > 0) && (i < 12) && (j < 14) && (j > 2))
                         {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row - i, col);
-                    }
-                    if (cnt == 2)
-                    {
-                        if (row + 1 < 15)
-                        {
-                            if (adv[row + 1, col] == 0)
+                            if (isEmpty(i + 3, j - 3) && isBlack(i + 2, j - 2) && isBlack(i + 1, j - 1) && isEmpty(i - 1, j + 1))
                             {
-                                showValue(row + 1, col, 10);
-                                adv[row + 1, col] = 1;
+                                check = 1;
                             }
                         }
-                        if (row - i >= 0)
+                        //위왼쪽방향대각선
+                        if ((i > 2) && (i < 14) && (j > 2) && (j < 14))
                         {
-                            if (adv[row - i, col] == 0)
+                            if (isEmpty(i + 1, j + 1) && isBlack(i - 1, j - 1) && isBlack(i - 2, j - 2) && isEmpty(i - 3, j - 3))
                             {
-                                showValue(row - i, col, 10);
-                                adv[row - i, col] = 1;
+                                check = 1;
                             }
                         }
-                    }
-                }
-
-                // (6) 왼쪽 위로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (row - 1 >= 0 && col - 1 >= 0)
-                {
-                    ret = adventureField(row - i, col - i);
-                    if (ret != null)
-                    {
-                        cnt += 1;
-                    }
-                    while (ret != null && cnt < 3)
-                    {
-                        if (String.Compare(ret, piece) == 0)
+                        if ((i > 1) && (i < 13) && (j > 1) && (j < 13))
                         {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row - i, col - i);
-                    }
-                    if (cnt == 2)
-                    {
-                        if (row + 1 < 15 && col + 1 < 15)
-                        {
-                            if (adv[row + 1, col + 1] == 0)
+                            if (isEmpty(i + 2, j + 2) && isBlack(i + 1, j + 1) && isBlack(i - 1, j - 1) && isEmpty(i - 2, j - 2))
                             {
-                                showValue(row + 1, col + 1, 10);
-                                adv[row + 1, col + 1] = 1;
+                                check = 1;
                             }
                         }
-                        if (row - i >= 0 && col - i >= 0)
+                        if ((i > 0) && (i < 12) && (j > 0) && (j < 12))
                         {
-                            if (adv[row - i, col - i] == 0)
+                            if (isEmpty(i - 1, j - 1) && isBlack(i + 1, j + 1) && isBlack(i + 2, j + 2) && isEmpty(i + 3, j + 3))
                             {
-                                showValue(row - i, col - i, 10);
-                                adv[row - i, col - i] = 1;
+                                check = 1;
                             }
                         }
-                    }
-                }
-
-                // (7) 위로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (col - 1 >= 0)
-                {
-                    ret = adventureField(row, col - i);
-                    if (ret != null)
-                    {
-                        cnt += 1;
-                    }
-                    while (ret != null && cnt < 3)
-                    {
-                        if (String.Compare(ret, piece) == 0)
+                        if (check == 1)
                         {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row, col - i);
-                    }
-                    if (cnt == 2)
-                    {
-                        if (col + 1 < 15)
-                        {
-                            if (adv[row, col + 1] == 0)
+                            if (adv[i, j] == 0)
                             {
-                                showValue(row, col + 1, 10);
-                                adv[row, col + 1] = 1;
-                            }
-                        }
-                        if (col - i >= 0)
-                        {
-                            if (adv[row, col - i] == 0)
-                            {
-                                showValue(row, col - i, 10);
-                                adv[row, col - i] = 1;
-                            }
-                        }
-                    }
-                }
-
-                // (8) 오른쪽 위로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (row + 1 < 15 && col - 1 >= 0)
-                {
-                    ret = adventureField(row + i, col - i);
-                    if (ret != null)
-                    {
-                        cnt += 1;
-                    }
-                    while (ret != null && cnt < 3)
-                    {
-                        if (String.Compare(ret, piece) == 0)
-                        {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row + i, col - i);
-                    }
-                    if (cnt == 2)
-                    {
-                        if (row - 1 >= 0 && col + 1 < 15)
-                        {
-                            if (adv[row - 1, col + 1] == 0)
-                            {
-                                showValue(row - 1, col + 1, 10);
-                                adv[row - 1, col + 1] = 1;
-                            }
-                        }
-                        if (row + i < 15 && col - i >= 0)
-                        {
-                            if (adv[row + i, col - i] == 0)
-                            {
-                                showValue(row + i, col - i, 10);
-                                adv[row + i, col - i] = 1;
+                                adv[i, j] = 1;
+                                showValue(i, j, 10);
                             }
                         }
                     }
@@ -6180,397 +5536,105 @@ namespace New_Jarvis
             // (20) 상대편의 방어가 없는 이목 - 2점
             makeBlack();
             #region 방어 없는 이목
-            while (true)
+            for (i = 0; i < 15; i++)
             {
-                found = false;
-
-                // 돌 1개 이어진거 찾으면 끝.
-                for (i = 0; i < 15; i++)
+                for (int j = 0; j < 15; j++)
                 {
-                    for (int j = 0; j < 15; j++)
+                    if (isEmpty(i, j))
                     {
-                        if (black[i, j] == 1)
+                        int check = 0;
+                        /********************2개되는 줄의 유무***********/
+                        //위아래
+                        if ((i > 1) && (i < 14))
                         {
-                            black[i, j] = 0;
-                            field[i, j].Selected = true;
-                            piece = field[i, j].Value.ToString();
-                            row = i;
-                            col = j;
-                            found = true;
-                            break;
-                        }
-                    }
-                    if (found)
-                    {
-                        break;
-                    }
-                }
-                if (!found)
-                {
-                    // end loop
-                    break;
-                }
-
-                if (piece == null)
-                {
-                    return -1;
-                }
-
-                // 8방향 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                // (1) 오른쪽으로 탐색
-                if (row + 1 < 15)
-                {
-                    ret = adventureField(row + i, col);
-                    if (ret != null)
-                    {
-                        cnt += 1;
-                    }
-                    while (ret != null && cnt < 2)
-                    {
-                        if (String.Compare(ret, piece) == 0)
-                        {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row + i, col);
-                    }
-                    if (cnt == 1)
-                    {
-                        if (row - 1 >= 0)
-                        {
-                            if (adv[row - 1, col] == 0)
+                            if (isBlack(i - 1, j))
                             {
-                                showValue(row - 1, col, 2);
-                                adv[row - 1, col] = 1;
+                                if (isEmpty(i + 1, j) && isEmpty(i - 2, j))
+                                {
+                                    check = 1;
+                                }
                             }
                         }
-                        if (row + i < 15)
+                        if ((i > 0) && (i < 13))
                         {
-                            if (adv[row + i, col] == 0)
+                            if (isBlack(i + 1, j))
                             {
-                                showValue(row + i, col, 2);
-                                adv[row + i, col] = 1;
+                                if (isEmpty(i + 2, j) && isEmpty(i - 1, j))
+                                {
+                                    check = 1;
+                                }
                             }
                         }
-                    }
-                }
-                // (2) 오른쪽 아래로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (row + 1 < 15 && col + 1 < 15)
-                {
-                    ret = adventureField(row + i, col + i);
-                    if (ret != null)
-                    {
-                        cnt += 1;
-                    }
-                    while (ret != null && cnt < 2)
-                    {
-                        if (String.Compare(ret, piece) == 0)
+                        //왼쪽오른쪽
+                        if ((j > 1) && (j < 14))
                         {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row + i, col + i);
-                    }
-                    if (cnt == 1)
-                    {
-                        if (row - 1 >= 0 && col - 1 >= 0)
-                        {
-                            if (adv[row - 1, col - 1] == 0)
+                            if (isBlack(i, j - 1))
                             {
-                                showValue(row - 1, col - 1, 2);
-                                adv[row - 1, col - 1] = 1;
+                                if (isEmpty(i, j + 1) && isEmpty(i, j - 2))
+                                {
+                                    check = 1;
+                                }
                             }
                         }
-                        if (row + i < 15 && col + i < 15)
+                        if ((j > 0) && (j < 13))
                         {
-                            if (adv[row + i, col + i] == 0)
+                            if (isBlack(i, j + 1))
                             {
-                                showValue(row + i, col + i, 2);
-                                adv[row + i, col + i] = 1;
+                                if (isEmpty(i, j + 2) && isEmpty(i, j - 1))
+                                {
+                                    check = 1;
+                                }
                             }
                         }
-                    }
-                }
-
-                // (3) 아래로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (col + 1 < 15)
-                {
-                    ret = adventureField(row, col + i);
-                    if (ret != null)
-                    {
-                        cnt += 1;
-                    }
-                    while (ret != null && cnt < 2)
-                    {
-                        if (String.Compare(ret, piece) == 0)
+                        //위오른쪽방향대각선
+                        if ((i > 1) && (i < 14) && (j < 13) && (j > 0))
                         {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row, col + i);
-                    }
-                    if (cnt == 1)
-                    {
-                        if (col - 1 >= 0)
-                        {
-                            if (adv[row, col - 1] == 0)
+                            if (isBlack(i - 1, j + 1))
                             {
-                                showValue(row, col - 1, 2);
-                                adv[row, col - 1] = 1;
+                                if (isEmpty(i + 1, j - 1) && isEmpty(i - 2, j + 2))
+                                {
+                                    check = 1;
+                                }
                             }
                         }
-                        if (col + i < 15)
+                        if ((i > 0) && (i < 13) && (j < 14) && (j > 1))
                         {
-                            if (adv[row, col + i] == 0)
+                            if (isBlack(i + 1, j - 1))
                             {
-                                showValue(row, col + i, 2);
-                                adv[row, col + i] = 1;
+                                if (isEmpty(i + 2, j - 2) && isEmpty(i - 1, j + 1))
+                                {
+                                    check = 1;
+                                }
                             }
                         }
-                    }
-                }
-
-                // (4) 왼쪽 아래로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (row - 1 >= 0 && col + 1 < 15)
-                {
-                    ret = adventureField(row - i, col + i);
-                    if (ret != null)
-                    {
-                        cnt += 1;
-                    }
-                    while (ret != null && cnt < 2)
-                    {
-                        if (String.Compare(ret, piece) == 0)
+                        //위왼쪽방향대각선
+                        if ((i > 1) && (i < 14) && (j > 1) && (j < 14))
                         {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row - i, col + i);
-                    }
-                    if (cnt == 1)
-                    {
-                        if (row + 1 < 15 && col - 1 >= 0)
-                        {
-                            if (adv[row + 1, col - 1] == 0)
+                            if (isBlack(i - 1, j - 1))
                             {
-                                showValue(row + 1, col - 1, 2);
-                                adv[row + 1, col - 1] = 1;
+                                if (isEmpty(i + 1, j + 1) && isEmpty(i - 2, j - 2))
+                                {
+                                    check = 1;
+                                }
                             }
                         }
-                        if (row - i >= 0 && col + i < 15)
+                        if ((i > 0) && (i < 13) && (j > 0) && (j < 13))
                         {
-                            if (adv[row - i, col + i] == 0)
+                            if (isBlack(i + 1, j + 1))
                             {
-                                showValue(row - i, col + i, 2);
-                                adv[row - i, col + i] = 1;
+                                if (isEmpty(i + 2, j + 2) && isEmpty(i - 1, j - 1))
+                                {
+                                    check = 1;
+                                }
                             }
                         }
-                    }
-                }
-
-                // (5) 왼쪽으로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (row - 1 >= 0)
-                {
-                    ret = adventureField(row - i, col);
-                    if (ret != null)
-                    {
-                        cnt += 1;
-                    }
-                    while (ret != null && cnt < 2)
-                    {
-                        if (String.Compare(ret, piece) == 0)
+                        /*******************************************************/
+                        if (check == 1)
                         {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row - i, col);
-                    }
-                    if (cnt == 1)
-                    {
-                        if (row + 1 < 15)
-                        {
-                            if (adv[row + 1, col] == 0)
+                            if (adv[i, j] == 0)
                             {
-                                showValue(row + 1, col, 2);
-                                adv[row + 1, col] = 1;
-                            }
-                        }
-                        if (row - i >= 0)
-                        {
-                            if (adv[row - i, col] == 0)
-                            {
-                                showValue(row - i, col, 2);
-                                adv[row - i, col] = 1;
-                            }
-                        }
-                    }
-                }
-
-                // (6) 왼쪽 위로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (row - 1 >= 0 && col - 1 >= 0)
-                {
-                    ret = adventureField(row - i, col - i);
-                    if (ret != null)
-                    {
-                        cnt += 1;
-                    }
-                    while (ret != null && cnt < 2)
-                    {
-                        if (String.Compare(ret, piece) == 0)
-                        {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row - i, col - i);
-                    }
-                    if (cnt == 1)
-                    {
-                        if (row + 1 < 15 && col + 1 < 15)
-                        {
-                            if (adv[row + 1, col + 1] == 0)
-                            {
-                                showValue(row + 1, col + 1, 2);
-                                adv[row + 1, col + 1] = 1;
-                            }
-                        }
-                        if (row - i >= 0 && col - i >= 0)
-                        {
-                            if (adv[row - i, col - i] == 0)
-                            {
-                                showValue(row - i, col - i, 2);
-                                adv[row - i, col - i] = 1;
-                            }
-                        }
-                    }
-                }
-
-                // (7) 위로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (col - 1 >= 0)
-                {
-                    ret = adventureField(row, col - i);
-                    if (ret != null)
-                    {
-                        cnt += 1;
-                    }
-                    while (ret != null && cnt < 2)
-                    {
-                        if (String.Compare(ret, piece) == 0)
-                        {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row, col - i);
-                    }
-                    if (cnt == 1)
-                    {
-                        if (col + 1 < 15)
-                        {
-                            if (adv[row, col + 1] == 0)
-                            {
-                                showValue(row, col + 1, 2);
-                                adv[row, col + 1] = 1;
-                            }
-                        }
-                        if (col - i >= 0)
-                        {
-                            if (adv[row, col - i] == 0)
-                            {
-                                showValue(row, col - i, 2);
-                                adv[row, col - i] = 1;
-                            }
-                        }
-                    }
-                }
-
-                // (8) 오른쪽 위로 탐색
-                cnt = 0;
-                i = 1;
-                ret = null;
-                if (row + 1 < 15 && col - 1 >= 0)
-                {
-                    ret = adventureField(row + i, col - i);
-                    if (ret != null)
-                    {
-                        cnt += 1;
-                    }
-                    while (ret != null && cnt < 2)
-                    {
-                        if (String.Compare(ret, piece) == 0)
-                        {
-                            cnt += 1;
-                        }
-                        else
-                        {
-                            break;
-                        }
-                        i += 1;
-                        ret = adventureField(row + i, col - i);
-                    }
-                    if (cnt == 1)
-                    {
-                        if (row - 1 >= 0 && col + 1 < 15)
-                        {
-                            if (adv[row - 1, col + 1] == 0)
-                            {
-                                showValue(row - 1, col + 1, 2);
-                                adv[row - 1, col + 1] = 1;
-                            }
-                        }
-                        if (row + i < 15 && col - i >= 0)
-                        {
-                            if (adv[row + i, col - i] == 0)
-                            {
-                                showValue(row + i, col - i, 2);
-                                adv[row + i, col - i] = 1;
+                                adv[i, j] = 1;
+                                showValue(i, j, 2);
                             }
                         }
                     }
